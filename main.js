@@ -12,7 +12,7 @@ var Unit = function(name, alternateNames) {
   
   this.allPossibleNames = [this.name, pluralizer.plural(this.name)].concat(alternateNames);
   
-  this.validName = function(name) {
+  this.canBeCalled = function(name) {
     return this.allPossibleNames.indexOf(name) !== -1
   }.bind(this);
 };
@@ -52,7 +52,7 @@ Unit.unitFromName = function(name) {
   ];
   for (var i = 0; i < units.length; i++) {
     var unit = units[i];
-    if (unit.validName(name)) {
+    if (unit.canBeCalled(name)) {
       return unit
     }
   }
