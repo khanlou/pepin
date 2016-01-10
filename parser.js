@@ -1,8 +1,3 @@
-var Amount = function(quantity, unit, ingredientName) {
-  this.quantity = quantity;
-  this.unit = unit;
-  this.ingredientName = ingredientName;
-};
 
 var allUnitRegex = '(' + Unit.allUnitNames().map(function(unitName) { return '\\b' + unitName + '\\b'}).join('|') + ')';
 
@@ -52,7 +47,6 @@ var Pattern = function(template) {
         ingredientName = result;
       }
     }
-    console.log("wow", quantity, unit, ingredientName);
     return new Amount(quantity, unit, ingredientName);
   }.bind(this);
 };
@@ -76,6 +70,4 @@ var IngredientParser = function(text) {
       break;
     }
   }
-
-  console.log("bing" + this.amount.quantity, this.amount.unit, this.amount.ingredientName)
 };
