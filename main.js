@@ -10,9 +10,12 @@ var Unit = function(name, alternateNames) {
   this.name = name;
   this.alternateNames = alternateNames;
   
-  this.allPossibleNames = [name, pluralizer.plural(name)].concat(alternateNames);
-  console.log(this.allPossibleNames)
-}
+  this.allPossibleNames = [this.name, pluralizer.plural(this.name)].concat(alternateNames);
+  
+  this.validName = function(name) {
+    return this.allPossibleNames.indexOf(name) !== -1
+  }.bind(this);
+};
 
 Unit.unitFromName = function(name) {
   var units = [
@@ -49,7 +52,7 @@ Unit.unitFromName = function(name) {
   ];
   for (var i = 0; i < units.length; i++) {
     var unit = units[i];
-    if (unit.name === name || unit.alternateNames.indexOf(name) !== -1) {
+    if (unit.validName(name)) {
       return unit
     }
   }
