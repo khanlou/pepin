@@ -22,10 +22,10 @@ var Pattern = function(template) {
   this.preparedTemplate = function() {
     var preparedTemplate = this.template;
 
-    preparedTemplate = preparedTemplate.replace(/\s+/g, '\\s+')
-    preparedTemplate = preparedTemplate.replace('{quantity}', this.quantityRegex)
-    preparedTemplate = preparedTemplate.replace('{unit}', this.allUnitRegex)
-    preparedTemplate = preparedTemplate.replace('{ingredient}', this.ingredientRegex)
+    preparedTemplate = preparedTemplate.replace(/\s+/g, '\\s+');
+    preparedTemplate = preparedTemplate.replace('{quantity}', this.quantityRegex);
+    preparedTemplate = preparedTemplate.replace('{unit}', this.allUnitRegex);
+    preparedTemplate = preparedTemplate.replace('{ingredient}', this.ingredientRegex);
 
     return preparedTemplate;
   }.bind(this)()
