@@ -1,5 +1,6 @@
-
-var allUnitRegex = '(' + Unit.allUnitNames().map(function(unitName) { return '\\b' + unitName + '\\b'}).join('|') + ')';
+var allUnitRegex = '(' + Unit.allUnitNames().map(function(unitName) {
+  return '\\b' + unitName + '\\b'
+}).join('|') + ')';
 
 var Pattern = function(template) {
   this.template = template;
@@ -27,13 +28,16 @@ var Pattern = function(template) {
     preparedTemplate = preparedTemplate.replace('{ingredient}', this.ingredientRegex);
 
     return preparedTemplate;
-  }.bind(this)()
+  }.bind(this)();
+
+  this.regex = new RegExp(this.preparedTemplate);
 
   this.matches = function(against) {
-    var results = against.match(this.preparedTemplate);
-    if (!results) {
-      return null;
-    }
+    return this.regex.test(against);
+  };
+
+  this.parse = function(against) {
+    var results = this.regex.exec(against);
     results.shift();
     var quantity, unit, ingredientName;
     for (var i = 0; i < results.length; i++) {
@@ -61,18 +65,15 @@ var IngredientParser = function(text) {
     new Pattern("{quantity} {ingredient}"), //an egg, 
   ];
 
-  for (var i = 0; i < this.patterns.length; i++) {
-    var pattern = this.patterns[i];
-    var match = pattern.matches(text)
-    if (match) {
-      this.amount = match;
-      break;
-    }
-  }
-  
+  this.amount = this.patterns
+    .find(function(pattern) {
+      return pattern.matches(this.text);
+    }.bind(this))
+    .parse(this.text);
+
   this.scale = function(scalingFactor) {
     var quantityForDisplay = new QuantityPresenter(this.amount.quantity * scalingFactor).quantityForDisplay
     return this.text.replace(this.amount.quantityAsString, quantityForDisplay);
   }.bind(this);
-  
+
 };
