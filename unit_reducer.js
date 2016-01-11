@@ -67,8 +67,6 @@ var UnitReducer = function(amount) {
     return conversion.unitName === this.amount.unit.name;
   }.bind(this))
 
-  this.quantityAtAnchor = this.amount.quantity * this.conversion.scaleToAnchor;
-
   this.convertedAmounts = this.conversions.map(function(conversion) {
     return conversion.convert(this.amount, this.conversion);
   }.bind(this));
