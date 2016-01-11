@@ -12,8 +12,8 @@ var IngredientParser = function(text) {
 
   this.matchingPattern = this.patterns
     .find(function(pattern) {
-      return pattern.matches(this.text);
-    }.bind(this));
+      return pattern.matches(text);
+    });
 
   this.amount = this.matchingPattern.parse(this.text);
 
