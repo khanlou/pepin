@@ -12,7 +12,7 @@ var Unit = function(data) {
   this.plural = data.plural || pluralizer.plural(this.name)
   this.system = data.system;
   this.measure = data.measure;
-  this.smallestMeasure = data.smallestMeasure;
+  this.smallestMeasure = data.smallestMeasure || 1;
 
   this.allPossibleNames = [this.name, this.plural].concat(this.alternateNames);
 
