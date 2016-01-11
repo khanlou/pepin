@@ -52,14 +52,16 @@ var QuantityPresenter = function(quantity) {
   
   this.integer = Math.floor(this.quantity);
   this.remainder = quantity - this.integer;
-  
-  console.log(this.integer)
-  
+    
   this.closestFraction = Object.keys(fractions).find(function(fraction) {
     return Math.abs(this.remainder - parseFloat(fraction)) < 0.01;
   }.bind(this))
   
-  this.integerAsString = this.integer == 0 ? '' : '' + this.integer
+  if (this.closestFraction) {
+    this.integerAsString = this.integer == 0 ? '' : '' + this.integer
+    this.quantityForDisplay = '' + this.integerAsString + ' ' + fractions[this.closestFraction];
+  } else {
+    this.quantityForDisplay = '' + this.quantity;
+  }
   
-  this.quantityForDisplay = '' + this.integerAsString + ' ' + fractions[this.closestFraction]
 }
