@@ -9,63 +9,75 @@ var Conversion = function(unitName, scaleToAnchor) { //add wet or dry, imperial 
   }.bind(this);
 };
 
-var conversions = {
-  dryImperial: [
-    new Conversion('cup', 48),
-    new Conversion('tablespoon', 3),
-    new Conversion('teaspoon', 1),
-    new Conversion('pinch', 1.0 / 16),
-    new Conversion('dash', 1.0 / 8),
-  ],
-  wetImperial: [
-    new Conversion('gallon', 768),
-    new Conversion('quart', 192),
-    new Conversion('pint', 96),
-    new Conversion('cup', 48),
-    new Conversion('tablespoon', 3),
-    new Conversion('teaspoon', 1),
-    new Conversion('dash', 1.0 / 8),
-  ],
-  fluidMetric: [
-    new Conversion('liter', 1000),
-    new Conversion('milliliter', 1),
-  ],
-  weightMetric: [
-    new Conversion('kilogram', 1000),
-    new Conversion('gram', 1),
-  ],
-};
+var conversions = [
+  {
+    measure: 'dry',
+    standard: 'imperial',
+    conversions: [
+      new Conversion('cup', 48),
+      new Conversion('tablespoon', 3),
+      new Conversion('teaspoon', 1),
+      new Conversion('pinch', 1.0 / 16),
+      new Conversion('dash', 1.0 / 8),
+    ],
+  },
+  {
+    measure: 'wet',
+    standard: 'imperial',
+    conversions: [
+      new Conversion('gallon', 768),
+      new Conversion('quart', 192),
+      new Conversion('pint', 96),
+      new Conversion('cup', 48),
+      new Conversion('tablespoon', 3),
+      new Conversion('teaspoon', 1),
+      new Conversion('dash', 1.0 / 8),
+    ],
+  },
+  {
+    measure: 'wet',
+    standard: 'metric',
+    conversions: [
+      new Conversion('liter', 1000),
+      new Conversion('milliliter', 1),
+    ],
+  },
+  {
+    measure: 'dry',
+    standard: 'metric',
+    conversions: [
+      new Conversion('kilogram', 1000),
+      new Conversion('gram', 1),
+    ],
+  }
+];
 
 var UnitReducer = function(amount) {
   this.amount = amount;
-  
-  for (var key in conversions) {
-    var conversionTable = conversions[key];
-    var validConversion = conversionTable.some(function(conversion) {
+
+  this.conversionTable = conversions.find(function(conversionTable) {
+    return conversionTable.conversions.some(function(conversion) {
       return conversion.unitName === this.amount.unit.name;
-    }.bind(this))
-    if (validConversion) {
-      this.conversionTable = conversionTable;
-      break;
-    }
-  }
+    }.bind(this));
+  }.bind(this));
   
-  this.conversion = this.conversionTable.find(function(conversion) {
+  this.conversions = this.conversionTable.conversions;
+
+  this.conversion = this.conversions.find(function(conversion) {
     return conversion.unitName === this.amount.unit.name;
   }.bind(this))
 
   this.quantityAtAnchor = this.amount.quantity * this.conversion.scaleToAnchor;
 
-  this.convertedAmounts = this.conversionTable.map(function(conversion) {
+  this.convertedAmounts = this.conversions.map(function(conversion) {
     return conversion.convert(this.amount, this.conversion);
   }.bind(this));
-    
+
   this.reducedAmount = this.convertedAmounts.reduce(function(bestConvertedAmount, convertedAmount) {
-    if (convertedAmount.quantity >= convertedAmount.unit.smallestMeasure
-      && convertedAmount.quantity < bestConvertedAmount.quantity) {
-        return convertedAmount;
-      } else {
-        return bestConvertedAmount;
-      }
+    if (convertedAmount.quantity >= convertedAmount.unit.smallestMeasure && convertedAmount.quantity < bestConvertedAmount.quantity) {
+      return convertedAmount;
+    } else {
+      return bestConvertedAmount;
+    }
   }, this.amount);
 };
