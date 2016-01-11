@@ -34,7 +34,7 @@ var Pattern = function(template) {
 
   this.matches = function(against) {
     return this.regex.test(against);
-  };
+  }.bind(this);
 
   this.parse = function(against) {
     var results = this.regex.exec(against);
@@ -52,6 +52,14 @@ var Pattern = function(template) {
     }
     return new Amount(quantity, unit, ingredientName);
   }.bind(this);
+  
+  this.inject = function(amount) {
+    var injected = this.template;
+    injected = injected.replace('{quantity}', amount.quantity);
+    injected = injected.replace('{unit}', amount.unit);
+    injected = injected.replace('{ingredient}', amount.ingredientName);
+    return injected;
+  }.bind(this);
 };
 
 var IngredientParser = function(text) {
@@ -65,15 +73,16 @@ var IngredientParser = function(text) {
     new Pattern("{quantity} {ingredient}"), //an egg, 
   ];
 
-  this.amount = this.patterns
+  this.matchingPattern = this.patterns
     .find(function(pattern) {
       return pattern.matches(this.text);
-    }.bind(this))
-    .parse(this.text);
+    }.bind(this));
+  
+  this.amount = this.matchingPattern.parse(this.text);
 
   this.scale = function(scalingFactor) {
     var quantityForDisplay = new QuantityPresenter(this.amount.quantity * scalingFactor).quantityForDisplay
-    return this.text.replace(this.amount.quantityAsString, quantityForDisplay);
+    return this.matchingPattern.inject({ quantity: quantityForDisplay, unit: this.amount.unit, ingredientName: this.amount.ingredientName})
   }.bind(this);
 
 };
