@@ -4,7 +4,7 @@ var IngredientBinder = function(lineItemNode) {
   this.parser = new IngredientParser(this.textNode.textContent);
   
   this.scale = function(scalingFactor) {
-    this.textNode.textContent = this.parser.amount.scale(scalingFactor);
+    this.textNode.textContent = this.parser.scale(scalingFactor);
   }.bind(this);
 };
 

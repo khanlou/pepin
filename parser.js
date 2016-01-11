@@ -47,7 +47,7 @@ var Pattern = function(template) {
         ingredientName = result;
       }
     }
-    return new Amount(against, quantity, unit, ingredientName);
+    return new Amount(quantity, unit, ingredientName);
   }.bind(this);
 };
 
@@ -70,4 +70,10 @@ var IngredientParser = function(text) {
       break;
     }
   }
+  
+  this.scale = function(scalingFactor) {
+    var quantityForDisplay = new QuantityPresenter(this.amount.quantity * scalingFactor).quantityForDisplay
+    return this.text.replace(this.amount.quantityAsString, quantityForDisplay);
+  }.bind(this);
+  
 };
