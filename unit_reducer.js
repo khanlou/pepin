@@ -38,7 +38,7 @@ var conversions = {
 
 var UnitReducer = function(amount) {
   this.amount = amount;
-
+  
   for (var key in conversions) {
     var conversionTable = conversions[key];
     var validConversion = conversionTable.some(function(conversion) {
@@ -49,19 +49,19 @@ var UnitReducer = function(amount) {
       break;
     }
   }
-
+  
   this.conversion = this.conversionTable.find(function(conversion) {
     return conversion.unitName === this.amount.unit.name;
   }.bind(this))
 
   this.quantityAtAnchor = this.amount.quantity * this.conversion.scaleToAnchor;
 
-  var bestConvertedAmount;
+  var bestConvertedAmount = this.amount;
   for (var i = 0; i < this.conversionTable.length; i++) {
     var conversion = this.conversionTable[i];
     var convertedAmount = conversion.convert(this.amount, this.conversion);
     if (convertedAmount.quantity >= convertedAmount.unit.smallestMeasure) {
-      if (!bestConvertedAmount || convertedAmount.quantity < bestConvertedAmount.quantity) {
+      if (convertedAmount.quantity < bestConvertedAmount.quantity) {
         bestConvertedAmount = convertedAmount;
       }
     }
@@ -69,15 +69,3 @@ var UnitReducer = function(amount) {
   
   this.reducedAmount = bestConvertedAmount;
 };
-
-
-
-// var cups = new Conversion('cup', 48);
-// var tablespoons = new Conversion('tablespoons', 3);
-
-var amount = new Amount(3, Unit.unitFromName('teaspoon'), "flour")
-// var inCups = cups.convert(amount, tablespoons)
-// console.log(inCups)
-
-var unitReducer = new UnitReducer(amount)
-console.log(unitReducer.reducedAmount)
