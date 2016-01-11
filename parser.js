@@ -1,4 +1,3 @@
-
 var IngredientParser = function(text) {
   this.text = text;
 
@@ -10,10 +9,9 @@ var IngredientParser = function(text) {
     new Pattern("{quantity} {ingredient}"), //an egg, 
   ];
 
-  this.matchingPattern = this.patterns
-    .find(function(pattern) {
-      return pattern.matches(text);
-    });
+  this.matchingPattern = this.patterns.find(function(pattern) {
+    return pattern.matches(text);
+  });
 
   this.amount = this.matchingPattern.parse(this.text);
 
