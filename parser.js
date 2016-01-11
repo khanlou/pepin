@@ -15,7 +15,6 @@ var Pattern = function(template) {
   ];
 
   this.quantityRegex = '(' + this.quantityRegexes.join('|') + ')';
-
   this.ingredientRegex = '(.+)';
   this.allUnitRegex = allUnitRegex;
 
