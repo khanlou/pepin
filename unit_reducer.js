@@ -9,7 +9,7 @@ var Conversion = function(unitName, scaleToAnchor) { //add wet or dry, imperial 
   }.bind(this);
 };
 
-var conversions = [
+var conversionTables = [
   {
     measure: 'dry',
     standard: 'imperial',
@@ -55,7 +55,7 @@ var conversions = [
 var UnitReducer = function(amount) {
   this.amount = amount;
 
-  this.conversionTable = conversions.find(function(conversionTable) {
+  this.conversionTable = conversionTables.find(function(conversionTable) {
     return conversionTable.conversions.some(function(conversion) {
       return conversion.unitName === this.amount.unit.name;
     }.bind(this));
