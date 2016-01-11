@@ -9,6 +9,8 @@ var Conversion = function(unitName, scaleToAnchor) { //add wet or dry, imperial 
   }.bind(this);
 };
 
+
+//https://www.exploratorium.edu/cooking/convert/measurements.html useful conversions
 var conversionTables = [
   {
     measure: 'dry',
@@ -29,6 +31,7 @@ var conversionTables = [
       new Conversion('quart', 192),
       new Conversion('pint', 96),
       new Conversion('cup', 48),
+      new Conversion('fluid ounce', 6),
       new Conversion('tablespoon', 3),
       new Conversion('teaspoon', 1),
       new Conversion('dash', 1.0 / 8),
