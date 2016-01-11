@@ -1,4 +1,5 @@
-var Amount = function(quantity, unit, ingredientName) {
+var Amount = function(original, quantity, unit, ingredientName) {
+  this.original = original;
   this.quantityAsString = quantity;
   this.unit = unit;
   this.ingredientName = ingredientName;
@@ -16,4 +17,8 @@ var Amount = function(quantity, unit, ingredientName) {
       return parsedFloat;
     }
   }.bind(this)()
+  
+  this.scale = function(scalingFactor) {
+    return this.original.replace(this.quantityAsString, this.quantity * scalingFactor);
+  }.bind(this);
 };

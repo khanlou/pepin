@@ -47,7 +47,7 @@ var Pattern = function(template) {
         ingredientName = result;
       }
     }
-    return new Amount(quantity, unit, ingredientName);
+    return new Amount(against, quantity, unit, ingredientName);
   }.bind(this);
 };
 

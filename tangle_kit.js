@@ -186,17 +186,17 @@ Tangle.classes.TKAdjustableNumber = {
     // help
 
     initializeHelp: function () {
-        // this.helpElement = (new Element("div", { "class": "TKAdjustableNumberHelp" })).inject(this.element, "top");
-        // this.helpElement.setStyle("display", "none");
-        // this.helpElement.set("text", "drag");
+        this.helpElement = (new Element("div", { "class": "TKAdjustableNumberHelp" })).inject(this.element, "top");
+        this.helpElement.setStyle("display", "none");
+        this.helpElement.set("text", "drag");
     },
     
     updateHelp: function () {
-        // var size = this.element.getSize();
-        // var top = -size.y + 7;
-        // var left = Math.round(0.5 * (size.x - 20));
-        // var display = (this.isHovering && !isAnyAdjustableNumberDragging) ? "block" : "none";
-        // this.helpElement.setStyles({ left:left, top:top, display:display });
+        var size = this.element.getSize();
+        var top = -size.y + 7;
+        var left = Math.round(0.5 * (size.x - 20));
+        var display = (this.isHovering && !isAnyAdjustableNumberDragging) ? "block" : "none";
+        this.helpElement.setStyles({ left:left, top:top, display:display });
     },
 
 
