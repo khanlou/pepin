@@ -1,3 +1,14 @@
+var AmountPresenter = function(pattern, amount) {
+  this.pattern = pattern;
+  this.amount = amount;
+
+  this.stringForDisplay = this.pattern.inject(
+    new QuantityPresenter(amount.quantity).quantityForDisplay,
+    amount.unit,
+    amount.ingredientName
+  );
+};
+
 var QuantityPresenter = function(quantity) {
   this.quantity = quantity;
   
