@@ -78,13 +78,18 @@ var allUnits = [
     system: Both,
     measure: Both,
   }),
-  //fluid ounce?
+  new Unit({
+    name: 'fluid ounce',
+    alternateNames: ['fl oz'],
+    system: Both,
+    measure: Wet,
+  }),
   //weight
   new Unit({
     name: 'ounce',
     alternateNames: ['oz', 'Oz', 'OZ'],
     system: Both,
-    measure: Both,
+    measure: Dry,
   }),
   new Unit({
     name: 'pound',
