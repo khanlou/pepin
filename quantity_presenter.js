@@ -27,13 +27,13 @@ var QuantityPresenter = function(quantity) {
   };
   
     
-  this.closestFraction = Object.keys(fractions).find(function(fraction) {
+  this.closestFraction = Object.keys(this.fractions).find(function(fraction) {
     return Math.abs(this.remainder - parseFloat(fraction)) < 0.01;
   }.bind(this))
   
   if (this.closestFraction) {
     this.integerAsString = this.integer == 0 ? '' : '' + this.integer
-    this.quantityForDisplay = this.integerAsString + fractions[this.closestFraction];
+    this.quantityForDisplay = this.integerAsString + this.fractions[this.closestFraction];
   } else {
     this.quantityForDisplay = '' + this.quantity;
   }
