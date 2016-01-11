@@ -11,9 +11,6 @@ var Amount = function(quantity, unit, ingredientName) {
       var numeratorAndDenominator = this.quantityAsString.split('/').map(function(part) { return parseInt(part); });
       return numeratorAndDenominator[0] / numeratorAndDenominator[1];
     }
-    var parsedFloat = parseFloat(this.quantityAsString)
-    if (parsedFloat) {
-      return parsedFloat;
-    }
+    return parseFloat(this.quantityAsString)
   }.bind(this)()
 };
