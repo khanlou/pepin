@@ -12,3 +12,9 @@ for (var i = 0; i < ingredientLineItems.length; i++) {
   var ingredientLineItem = ingredientLineItems[i];
   ingredientParsers.push(new IngredientBinder(ingredientLineItem));
 }
+
+
+var tangle = new Tangle(document.getElementById('scaler'), {
+  initialize: function() { this.scalingFactor = 1; },
+  update: function() { console.log(this.scalingFactor); },
+});
