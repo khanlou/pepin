@@ -52,14 +52,25 @@ var Pattern = function(template) {
     }
     return new Amount(quantity, unit, ingredientName);
   }.bind(this);
-  
-  this.inject = function(amount) {
+
+  this.inject = function(quantity, unit, ingredientName) {
     var injected = this.template;
-    injected = injected.replace('{quantity}', amount.quantity);
-    injected = injected.replace('{unit}', amount.unit);
-    injected = injected.replace('{ingredient}', amount.ingredientName);
+    injected = injected.replace('{quantity}', quantity);
+    injected = injected.replace('{unit}', unit);
+    injected = injected.replace('{ingredient}', ingredientName);
     return injected;
   }.bind(this);
+};
+
+var AmountPresenter = function(pattern, amount) {
+  this.pattern = pattern;
+  this.amount = amount;
+
+  this.stringForDisplay = this.pattern.inject(
+    new QuantityPresenter(amount.quantity).quantityForDisplay,
+    amount.unit,
+    amount.ingredientName
+  );
 };
 
 var IngredientParser = function(text) {
@@ -77,12 +88,11 @@ var IngredientParser = function(text) {
     .find(function(pattern) {
       return pattern.matches(this.text);
     }.bind(this));
-  
+
   this.amount = this.matchingPattern.parse(this.text);
 
   this.scale = function(scalingFactor) {
-    var quantityForDisplay = new QuantityPresenter(this.amount.quantity * scalingFactor).quantityForDisplay
-    return this.matchingPattern.inject({ quantity: quantityForDisplay, unit: this.amount.unit, ingredientName: this.amount.ingredientName})
+    return new AmountPresenter(this.matchingPattern, this.amount.amountByScaling(scalingFactor)).stringForDisplay;
   }.bind(this);
 
 };
