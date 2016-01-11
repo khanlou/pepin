@@ -148,6 +148,10 @@ var Inflector = function() {
 
     return (inclusive ? count + ' ' : '') + pluralized;
   }
+  
+  self.pluralizeWithCount = function(word, count) {
+    return pluralize(word, count, false);
+  };
 
   /**
    * Pluralize a word.

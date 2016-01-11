@@ -6,7 +6,7 @@ var AmountPresenter = function(pattern, amount) {
   
   this.stringForDisplay = this.pattern.inject(
     new QuantityPresenter(this.reducedAmount.quantity).quantityForDisplay,
-    this.reducedAmount.unit.name,
+    pluralizer.pluralizeWithCount(this.reducedAmount.unit.name, this.reducedAmount.quantity),
     this.reducedAmount.ingredientName
   );
 };
