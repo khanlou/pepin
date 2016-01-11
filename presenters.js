@@ -49,4 +49,4 @@ var QuantityPresenter = function(quantity) {
     this.quantityForDisplay = '' + this.quantity;
   }
   
-}
+};
