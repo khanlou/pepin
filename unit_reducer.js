@@ -56,16 +56,16 @@ var UnitReducer = function(amount) {
 
   this.quantityAtAnchor = this.amount.quantity * this.conversion.scaleToAnchor;
 
-  var bestConvertedAmount = this.amount;
-  for (var i = 0; i < this.conversionTable.length; i++) {
-    var conversion = this.conversionTable[i];
-    var convertedAmount = conversion.convert(this.amount, this.conversion);
-    if (convertedAmount.quantity >= convertedAmount.unit.smallestMeasure) {
-      if (convertedAmount.quantity < bestConvertedAmount.quantity) {
-        bestConvertedAmount = convertedAmount;
+  this.convertedAmounts = this.conversionTable.map(function(conversion) {
+    return conversion.convert(this.amount, this.conversion);
+  }.bind(this));
+    
+  this.reducedAmount = this.convertedAmounts.reduce(function(bestConvertedAmount, convertedAmount) {
+    if (convertedAmount.quantity >= convertedAmount.unit.smallestMeasure
+      && convertedAmount.quantity < bestConvertedAmount.quantity) {
+        return convertedAmount;
+      } else {
+        return bestConvertedAmount;
       }
-    }
-  }
-  
-  this.reducedAmount = bestConvertedAmount;
+  }, this.amount);
 };
