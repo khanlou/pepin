@@ -59,7 +59,7 @@ var QuantityPresenter = function(quantity) {
   
   if (this.closestFraction) {
     this.integerAsString = this.integer == 0 ? '' : '' + this.integer
-    this.quantityForDisplay = '' + this.integerAsString + ' ' + fractions[this.closestFraction];
+    this.quantityForDisplay = this.integerAsString + fractions[this.closestFraction];
   } else {
     this.quantityForDisplay = '' + this.quantity;
   }
