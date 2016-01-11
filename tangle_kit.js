@@ -153,7 +153,6 @@ Tangle.classes.TKAdjustableNumber = {
     
     initializeHover: function () {
         this.isHovering = false;
-        console.log(this.element)
         this.element.addEventListener("mouseenter", (function () { this.isHovering = true;  this.updateRolloverEffects(); }).bind(this));
         this.element.addEventListener("mouseleave", (function () { this.isHovering = false; this.updateRolloverEffects(); }).bind(this));
     },

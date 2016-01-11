@@ -11,17 +11,17 @@ var IngredientBinder = function(lineItemNode) {
 var ingredientsElement = document.getElementById('ingredients');
 var ingredientLineItems = ingredients.children[0].children;
 
-var ingredientParsers = [];
+var ingredientBinders = [];
 for (var i = 0; i < ingredientLineItems.length; i++) {
   var ingredientLineItem = ingredientLineItems[i];
-  ingredientParsers.push(new IngredientBinder(ingredientLineItem));
+  ingredientBinders.push(new IngredientBinder(ingredientLineItem));
 }
 
 var tangle = new Tangle(document.getElementById('scaler'), {
   initialize: function() { this.scalingFactor = 1; },
   update: function() {
-    ingredientParsers.forEach(function(ingredientParser) {
-      ingredientParser.scale(this.scalingFactor);
+    ingredientBinders.forEach(function(ingredientBinder) {
+      ingredientBinder.scale(this.scalingFactor);
     }.bind(this))
   },
 });
