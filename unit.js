@@ -1,53 +1,163 @@
 var pluralizer = new Inflector();
 
-var Unit = function(name, alternateNames) {
-  this.name = name;
-  this.alternateNames = alternateNames;
-  
-  this.allPossibleNames = [this.name, pluralizer.plural(this.name)].concat(alternateNames);
-  
+var Imperial = 'imperial';
+var Metric = 'metric';
+var Both = 'both';
+var Wet = 'wet';
+var Dry = 'dry';
+
+var Unit = function(data) {
+  this.name = data.name;
+  this.alternateNames = data.alternateNames || [];
+  this.plural = data.plural || pluralizer.plural(this.name)
+  this.system = data.system;
+  this.measure = data.measure;
+  this.smallestMeasure = data.smallestMeasure;
+
+  this.allPossibleNames = [this.name, this.plural].concat(this.alternateNames);
+
   this.canBeCalled = function(name) {
     return this.allPossibleNames.indexOf(name) !== -1
   }.bind(this);
 };
 
 var allUnits = [
-    //fluid
-    new Unit('tablespoon', ['T', 'Tbs', 'tbs']),
-    new Unit('teaspoon', ['t', 'Tsp', 'tsp']),
-    new Unit('cup', ['C', 'c']),
-    new Unit('pint', ['pt', 'PT', 'Pt']),
-    new Unit('quart', ['QT', 'Qt', 'qt']),
-    new Unit('gallon', ['Gal', 'GAL', 'gal']),
-    new Unit('liter', ['L', 'l']),
-    //extra
-    new Unit('pinch', []),
-    new Unit('little', []),
-    new Unit('dash', []),
-    //weight
-    new Unit('ounce', ['oz', 'Oz', 'OZ']),
-    new Unit('pound', ['lb', 'Lb', 'LB']),
-    new Unit('gram', ['g']),
-    //length
-    new Unit('milliliter', ['ml']),
-    new Unit('inch', ['"', 'in', 'In', 'IN']),
-    new Unit('millimeter', ['mm']),
-    new Unit('centimeter', ['cm']),
-    //whole units
-    new Unit('whole', []),
-    new Unit('half', []),
-    //containers
-    new Unit('can', []),
-    new Unit('bottle', []),
-    new Unit('large', ['lg', 'LG', 'Lg']),
-    new Unit('package', ['pkg', 'Pkg', 'PKG']),
-    new Unit('stick', []),
-  ];
+  //volume
+  new Unit({
+    name: 'tablespoon',
+    alternateNames: ['T', 'Tbs', 'tbs'],
+    system: Both,
+    measure: Both,
+  }),
+  new Unit({
+    name: 'teaspoon',
+    alternateNames: ['t', 'Tsp', 'tsp'],
+    system: Both,
+    measure: Both,
+    smallestMeasure: 1.0 / 8,
+  }),
+  new Unit({
+    name: 'cup',
+    alternateNames: ['C', 'c'],
+    system: Both,
+    measure: Both,
+    smallestMeasure: 1.0 / 4
+  }),
+  new Unit({
+    name: 'pint',
+    alternateNames: ['pt', 'PT', 'Pt'],
+    system: Imperial,
+    measure: Wet,
+  }),
+  new Unit({
+    name: 'quart',
+    alternateNames: ['QT', 'Qt', 'qt'],
+    system: Imperial,
+    measure: Wet,
+  }),
+  new Unit({
+    name: 'gallon',
+    alternateNames: ['Gal', 'GAL', 'gal'],
+    system: Imperial,
+    measure: Wet,
+  }),
+  new Unit({
+    name: 'liter',
+    alternateNames: ['L', 'l'],
+    system: Metric,
+    measure: Wet,
+  }),
+  new Unit({
+    name: 'pinch',
+    alternateNames: ['little'],
+    system: Metric,
+    measure: Dry,
+  }),
+  new Unit({
+    name: 'dash',
+    system: Both,
+    measure: Both,
+  }),
+  //fluid ounce?
+  //weight
+  new Unit({
+    name: 'ounce',
+    alternateNames: ['oz', 'Oz', 'OZ'],
+    system: Both,
+    measure: Both,
+  }),
+  new Unit({
+    name: 'pound',
+    alternateNames: ['lb', 'Lb', 'LB'],
+    smallestMeasure: 1.0/8,
+  }),
+  new Unit({
+    name: 'gram',
+    alternateNames: ['g'],
+    system: Metric,
+    measure: Both,
+  }),
+  new Unit({
+    name: 'kilogram',
+    alternateNames: ['g'],
+    system: Metric,
+    measure: Both,
+  }),
+  //length
+  new Unit({
+    name: 'milliliter',
+    alternateNames: ['ml'],
+    system: Metric,
+  }),
+  new Unit({
+    name: 'inch',
+    alternateNames: ['"', 'in', 'In', 'IN'],
+    smallestMeasure: 1.0/8,
+    system: Imperial,
+  }),
+  new Unit({
+    name: 'millimeter',
+    alternateNames: ['mm'],
+    system: Metric,
+  }),
+  new Unit({
+    name: 'centimeter',
+    alternateNames: ['cm'],
+    system: Metric,
+  }),
+  //whole units
+  new Unit({
+    name: 'whole',
+  }),
+  new Unit({
+    name: 'half',
+  }),
+  //containers
+  new Unit({
+    name: 'can',
+  }),
+  new Unit({
+    name: 'bottle',
+  }),
+  new Unit({
+    name: 'package',
+    alternateNames: ['pkg', 'Pkg', 'PKG'],
+  }),
+  new Unit({
+    name: 'stick',
+  }),
+  new Unit({
+    name: 'pat',
+  }),
+  new Unit({
+    name: 'knob',
+  }),
+];
 
 
 Unit.unitFromName = function(name) {
   return allUnits.find(function(unit) {
-      return unit.canBeCalled(name)
+    return unit.canBeCalled(name)
   });
 };
 
