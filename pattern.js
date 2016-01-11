@@ -45,7 +45,7 @@ var Pattern = function(template) {
       if (new RegExp(this.quantityRegex).test(result)) {
         quantity = result;
       } else if (new RegExp(this.allUnitRegex).test(result)) {
-        unit = result;
+        unit = Unit.unitFromName(result);
       } else if (new RegExp(this.ingredientRegex).test(result)) {
         ingredientName = result;
       }

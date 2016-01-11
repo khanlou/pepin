@@ -1,11 +1,13 @@
 var AmountPresenter = function(pattern, amount) {
   this.pattern = pattern;
   this.amount = amount;
-
+  this.unitReducer = new UnitReducer(this.amount);
+  this.reducedAmount = this.unitReducer.reducedAmount;
+  
   this.stringForDisplay = this.pattern.inject(
-    new QuantityPresenter(amount.quantity).quantityForDisplay,
-    amount.unit,
-    amount.ingredientName
+    new QuantityPresenter(this.reducedAmount.quantity).quantityForDisplay,
+    this.reducedAmount.unit.name,
+    this.reducedAmount.ingredientName
   );
 };
 
@@ -48,5 +50,4 @@ var QuantityPresenter = function(quantity) {
   } else {
     this.quantityForDisplay = '' + this.quantity;
   }
-  
 };
