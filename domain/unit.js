@@ -6,13 +6,13 @@ var Both = 'both';
 var Wet = 'wet';
 var Dry = 'dry';
 
-var Unit = function(data) {
-  this.name = data.name;
-  this.alternateNames = data.alternateNames || [];
-  this.plural = data.plural || pluralizer.plural(this.name)
-  this.system = data.system;
-  this.measure = data.measure;
-  this.smallestMeasure = data.smallestMeasure || 1;
+var Unit = function(properties) {
+  this.name = properties.name;
+  this.alternateNames = properties.alternateNames || [];
+  this.plural = properties.plural || pluralizer.plural(this.name)
+  this.system = properties.system;
+  this.measure = properties.measure;
+  this.smallestMeasure = properties.smallestMeasure || 1;
 
   this.allPossibleNames = [this.name, this.plural].concat(this.alternateNames);
 
