@@ -61,3 +61,13 @@ var Pattern = function(template) {
     return injected;
   }.bind(this);
 };
+
+
+Pattern.allPatterns = [
+  new Pattern("{ingredient} to taste"),
+  new Pattern("{ingredient} as desired"),
+  new Pattern("{quantity} {unit} of {ingredient}"), // 2 sticks of butter, 2-3 tablespoons of sugar
+  new Pattern("{quantity} {unit} {ingredient}"), //1 cup flour
+  new Pattern("{quantity} {ingredient}"), //an egg, 
+  //{quantity} {unit} plus {quantity} {unit} {ingredient} 
+];
