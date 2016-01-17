@@ -15,11 +15,11 @@ describe("pattern", function() {
   });
   
   it("should parse", function() {
-    var amount = pattern.parse("1 cup of flour");
+    var ingredientLine = pattern.parse("1 cup of flour");
     
-    assert.equal(amount.quantity, 1);
-    assert.equal(amount.unit.name, 'cup');
-    assert.equal(amount.ingredient.name, 'flour');
+    assert.equal(ingredientLine.amount.quantity, 1);
+    assert.equal(ingredientLine.amount.unit.name, 'cup');
+    assert.equal(ingredientLine.ingredient.name, 'flour');
   });
   
   it("should inject", function() {

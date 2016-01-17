@@ -4,27 +4,27 @@ var assert = require('assert');
 describe("parser", function() {
   it("should parse simple ingredient lines", function() {
     var parser = new IngredientParser("1 cup flour");
-    var amount = parser.amount;
-    assert.equal(amount.quantity, 1)
-    assert.equal(amount.unit.name, 'cup')
-    assert.equal(amount.ingredient.name, 'flour')
+    var ingredientLine = parser.ingredientLine;
+    assert.equal(ingredientLine.amount.quantity, 1)
+    assert.equal(ingredientLine.amount.unit.name, 'cup')
+    assert.equal(ingredientLine.ingredient.name, 'flour')
   });
 
   it("should parse ingredient lines with 'of'", function() {
     var parser = new IngredientParser("1 cup of flour");
-    var amount = parser.amount;
-    assert.equal(amount.quantity, 1)
-    assert.equal(amount.unit.name, 'cup')
-    assert.equal(amount.ingredient.name, 'flour')
+    var ingredientLine = parser.ingredientLine;
+    assert.equal(ingredientLine.amount.quantity, 1)
+    assert.equal(ingredientLine.amount.unit.name, 'cup')
+    assert.equal(ingredientLine.ingredient.name, 'flour')
   });
 
   it("should scale ingredient lines", function() {
     var parser = new IngredientParser("1 cup of flour");
-    var amount = parser.amount
-    var scaled = amount.amountByScaling(3)
+    var ingredientLine = parser.ingredientLine
+    var scaled = ingredientLine.ingredientLineByScaling(3)
     
-    assert.equal(scaled.quantity, 3)
-    assert.equal(scaled.unit.name, 'cup')
+    assert.equal(scaled.amount.quantity, 3)
+    assert.equal(scaled.amount.unit.name, 'cup')
     assert.equal(scaled.ingredient.name, 'flour')
   });
   

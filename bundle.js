@@ -1,6 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var Amount = function(quantity, unit, ingredientName) {
-
+var Amount = function(quantity, unit) {
+  
   this.parseQuantity = function(quantityAsString) {
     if (quantityAsString === "a" || quantityAsString === "an") {
       return 1;
@@ -22,11 +22,9 @@ var Amount = function(quantity, unit, ingredientName) {
   }
 
   this.unit = unit;
-  this.ingredient = { name: ingredientName };
-
 
   this.amountByScaling = function(scalingFactor) {
-    return new Amount(this.quantity * scalingFactor, this.unit, this.ingredient.name);
+    return new Amount(this.quantity * scalingFactor, this.unit);
   }.bind(this);
   
   this.isValid = (this.quantity >= this.unit.smallestMeasure);
@@ -34,8 +32,6 @@ var Amount = function(quantity, unit, ingredientName) {
 
 module.exports = Amount;
 },{}],2:[function(require,module,exports){
-arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],3:[function(require,module,exports){
 var Inflector = function() {
   
   var self = this;
@@ -479,7 +475,25 @@ var Inflector = function() {
 };
 
 module.exports = Inflector;
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
+var Amount = require('./amount');
+
+var IngredientLine = function(amount, ingredient) {
+  this.amount = amount;
+  
+  if (typeof ingredient === 'string') {
+    this.ingredient = { name: ingredient };
+  } else {
+    this.ingredient = ingredient;
+  }
+  
+  this.ingredientLineByScaling = function(scalingFactor) {
+    return new IngredientLine(this.amount.amountByScaling(scalingFactor), this.ingredient);
+  }.bind(this);
+};
+
+module.exports = IngredientLine;
+},{"./amount":1}],4:[function(require,module,exports){
 var Pattern = require('./pattern');
 var AmountPresenter = require('./presenters').AmountPresenter;
 
@@ -490,10 +504,10 @@ var IngredientParser = function(text) {
     return pattern.matches(text);
   });
 
-  this.amount = this.matchingPattern.parse(this.text);
+  this.ingredientLine = this.matchingPattern.parse(this.text);
 
   this.scale = function(scalingFactor) {
-    return new AmountPresenter(this.matchingPattern, this.amount.amountByScaling(scalingFactor)).stringForDisplay;
+    return new AmountPresenter(this.matchingPattern, this.ingredientLine.ingredientLineByScaling(scalingFactor)).stringForDisplay;
   }.bind(this);
 
 };
@@ -501,7 +515,8 @@ var IngredientParser = function(text) {
 module.exports = IngredientParser;
 },{"./pattern":5,"./presenters":7}],5:[function(require,module,exports){
 var Unit = require('./unit');
-var IngredientLine = require('./amount');
+var IngredientLine = require('./ingredient_line');
+var Amount = require('./amount');
 
 var allUnitRegex = '(' + Unit.allUnitNames().map(function(unitName) {
   return '\\b' + unitName + '\\b'
@@ -555,7 +570,7 @@ var Pattern = function(template) {
         ingredientName = result;
       }
     }
-    return new IngredientLine(quantity, unit, ingredientName);
+    return new IngredientLine(new Amount(quantity, unit), ingredientName);
   }.bind(this);
 
   this.inject = function(quantity, unit, ingredientName) {
@@ -578,7 +593,7 @@ Pattern.allPatterns = [
 ];
 
 module.exports = Pattern;
-},{"./amount":2,"./unit":8}],6:[function(require,module,exports){
+},{"./amount":1,"./ingredient_line":3,"./unit":8}],6:[function(require,module,exports){
 if (!Array.prototype.find) {
   Array.prototype.find = function(predicate) {
     if (this === null) {
@@ -616,16 +631,16 @@ var inflector = new Inflector();
 var UnitReducer = require('./unit_reducer');
 
 
-var AmountPresenter = function(pattern, amount) {
+var AmountPresenter = function(pattern, ingredientLine) {
   this.pattern = pattern;
-  this.amount = amount;
-  this.unitReducer = new UnitReducer(this.amount);
+  this.ingredientLine = ingredientLine;
+  this.unitReducer = new UnitReducer(this.ingredientLine.amount);
   this.reducedAmount = this.unitReducer.reducedAmount;
   
   this.stringForDisplay = this.pattern.inject(
     new QuantityPresenter(this.reducedAmount.quantity).quantityForDisplay,
     inflector.pluralizeWithCount(this.reducedAmount.unit.name, this.reducedAmount.quantity),
-    this.reducedAmount.ingredient.name
+    this.ingredientLine.ingredient.name
   );
 };
 
@@ -672,7 +687,7 @@ var QuantityPresenter = function(quantity) {
 
 module.exports.AmountPresenter = AmountPresenter;
 module.exports.QuantityPresenter = QuantityPresenter;
-},{"./inflector":3,"./unit_reducer":9}],8:[function(require,module,exports){
+},{"./inflector":2,"./unit_reducer":9}],8:[function(require,module,exports){
 var polyfills = require('./polyfills');
 
 var Inflector = require('./inflector');
@@ -852,9 +867,9 @@ Unit.allUnitNames = function() {
 };
 
 module.exports = Unit;
-},{"./inflector":3,"./polyfills":6}],9:[function(require,module,exports){
+},{"./inflector":2,"./polyfills":6}],9:[function(require,module,exports){
 var Unit = require('./unit');
-var Amount = require('./Amount');
+var Amount = require('./amount');
 
 var Conversion = function(unitName, scaleToAnchor) { //add wet or dry, imperial or metric, and the name of the anchor measurement
   this.unitName = unitName;
@@ -863,7 +878,7 @@ var Conversion = function(unitName, scaleToAnchor) { //add wet or dry, imperial 
 
   this.convert = function(amount, relatedConversion) {
     var quantityAtAnchor = amount.quantity * relatedConversion.scaleToAnchor;
-    return new Amount(quantityAtAnchor / this.scaleToAnchor, this.unit, amount.ingredient.name);
+    return new Amount(quantityAtAnchor / this.scaleToAnchor, this.unit);
   }.bind(this);
 };
 
@@ -943,7 +958,7 @@ var UnitReducer = function(amount) {
 
 module.exports = UnitReducer;
 
-},{"./Amount":1,"./unit":8}],10:[function(require,module,exports){
+},{"./amount":1,"./unit":8}],10:[function(require,module,exports){
 var IngredientParser = require('./domain/parser');
 
 var IngredientBinder = function(lineItemNode) {

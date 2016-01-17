@@ -8,10 +8,10 @@ var IngredientParser = function(text) {
     return pattern.matches(text);
   });
 
-  this.amount = this.matchingPattern.parse(this.text);
+  this.ingredientLine = this.matchingPattern.parse(this.text);
 
   this.scale = function(scalingFactor) {
-    return new AmountPresenter(this.matchingPattern, this.amount.amountByScaling(scalingFactor)).stringForDisplay;
+    return new AmountPresenter(this.matchingPattern, this.ingredientLine.ingredientLineByScaling(scalingFactor)).stringForDisplay;
   }.bind(this);
 
 };

@@ -1,5 +1,6 @@
 var Unit = require('./unit');
 var IngredientLine = require('./ingredient_line');
+var Amount = require('./amount');
 
 var allUnitRegex = '(' + Unit.allUnitNames().map(function(unitName) {
   return '\\b' + unitName + '\\b'
@@ -53,7 +54,7 @@ var Pattern = function(template) {
         ingredientName = result;
       }
     }
-    return new IngredientLine(quantity, unit, ingredientName);
+    return new IngredientLine(new Amount(quantity, unit), ingredientName);
   }.bind(this);
 
   this.inject = function(quantity, unit, ingredientName) {
