@@ -42,8 +42,3 @@ describe("parser", function() {
   
   
 });
-
-//test plurals
-//test reducing
-//test scaling
-//test different patterns
