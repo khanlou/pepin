@@ -439,3 +439,5 @@ var Inflector = function() {
     /[^aeiou]ese$/i // "chinese", "japanese"
   ].forEach(self.addUncountableRule);
 };
+
+module.exports = Inflector;

@@ -1,5 +1,8 @@
+var Inflector = require('./inflector');
+var inflector = new Inflector();
+
 var UnitReducer = require('./unit_reducer');
-var pluralizer = new Inflector();
+
 
 var AmountPresenter = function(pattern, amount) {
   this.pattern = pattern;
@@ -9,7 +12,7 @@ var AmountPresenter = function(pattern, amount) {
   
   this.stringForDisplay = this.pattern.inject(
     new QuantityPresenter(this.reducedAmount.quantity).quantityForDisplay,
-    pluralizer.pluralizeWithCount(this.reducedAmount.unit.name, this.reducedAmount.quantity),
+    inflector.pluralizeWithCount(this.reducedAmount.unit.name, this.reducedAmount.quantity),
     this.reducedAmount.ingredientName
   );
 };

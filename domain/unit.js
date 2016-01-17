@@ -1,4 +1,6 @@
-var pluralizer = new Inflector();
+var Inflector = require('./inflector');
+
+var inflector = new Inflector();
 
 var Imperial = 'imperial';
 var Metric = 'metric';
@@ -9,7 +11,7 @@ var Dry = 'dry';
 var Unit = function(properties) {
   this.name = properties.name;
   this.alternateNames = properties.alternateNames || [];
-  this.plural = properties.plural || pluralizer.plural(this.name)
+  this.plural = properties.plural || inflector.plural(this.name)
   this.system = properties.system;
   this.measure = properties.measure;
   this.smallestMeasure = properties.smallestMeasure || 1;
