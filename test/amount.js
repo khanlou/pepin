@@ -17,6 +17,18 @@ describe("parser", function() {
     assert.equal(amount.unit.name, 'cup')
     assert.equal(amount.ingredientName, 'flour')
   });
+
+  it("should scale ingredient lines", function() {
+    var parser = new IngredientParser("1 cup of flour");
+    var amount = parser.amount
+    var scaled = amount.amountByScaling(3)
+    
+    assert.equal(scaled.quantity, 3)
+    assert.equal(scaled.unit.name, 'cup')
+    assert.equal(scaled.ingredientName, 'flour')
+  });
+  
+  
   
 });
 
