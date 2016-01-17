@@ -1,4 +1,4 @@
-var Amount = function(quantity, unit, ingredientName) {
+var IngredientLine = function(quantity, unit, ingredientName) {
 
   this.parseQuantity = function(quantityAsString) {
     if (quantityAsString === "a" || quantityAsString === "an") {
@@ -25,10 +25,10 @@ var Amount = function(quantity, unit, ingredientName) {
 
 
   this.amountByScaling = function(scalingFactor) {
-    return new Amount(this.quantity * scalingFactor, this.unit, this.ingredient.name);
+    return new IngredientLine(this.quantity * scalingFactor, this.unit, this.ingredient.name);
   }.bind(this);
   
   this.isValid = (this.quantity >= this.unit.smallestMeasure);
 };
 
-module.exports = Amount;
+module.exports = IngredientLine;

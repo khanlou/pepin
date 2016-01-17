@@ -1,10 +1,10 @@
 var Unit = require('../domain/unit');
-var Amount = require('../domain/amount');
+var IngredientLine = require('../domain/ingredient_line');
 var assert = require('assert');
 
 describe("amount", function() {
   it("amounts should be constructed", function() {
-    var amount = new Amount(1, Unit.unitFromName('cup'), 'flour');
+    var amount = new IngredientLine(1, Unit.unitFromName('cup'), 'flour');
     
     assert.equal(amount.quantity, 1);
     assert.equal(amount.unit.name, 'cup');
@@ -12,7 +12,7 @@ describe("amount", function() {
   });
   
   it("amounts should parse 'a'", function() {
-    var amount = new Amount('a', Unit.unitFromName('cup'), 'flour');
+    var amount = new IngredientLine('a', Unit.unitFromName('cup'), 'flour');
     
     assert.equal(amount.quantity, 1);
     assert.equal(amount.unit.name, 'cup');
@@ -20,7 +20,7 @@ describe("amount", function() {
   });
 
   it("amounts should parse 'an'", function() {
-    var amount = new Amount('an', Unit.unitFromName('ounce'), 'flour');
+    var amount = new IngredientLine('an', Unit.unitFromName('ounce'), 'flour');
     
     assert.equal(amount.quantity, 1);
     assert.equal(amount.unit.name, 'ounce');
@@ -28,7 +28,7 @@ describe("amount", function() {
   });
   
   it("amounts should parse fractions", function() {
-    var amount = new Amount('3/4', Unit.unitFromName('cup'), 'flour');
+    var amount = new IngredientLine('3/4', Unit.unitFromName('cup'), 'flour');
     
     assert.equal(amount.quantity, 0.75);
     assert.equal(amount.unit.name, 'cup');
@@ -36,7 +36,7 @@ describe("amount", function() {
   });
   
   it("amounts should parse decimals", function() {
-    var amount = new Amount('0.25', Unit.unitFromName('cup'), 'flour');
+    var amount = new IngredientLine('0.25', Unit.unitFromName('cup'), 'flour');
     
     assert.equal(amount.quantity, 0.25);
     assert.equal(amount.unit.name, 'cup');
@@ -44,7 +44,7 @@ describe("amount", function() {
   });
   
   it("should scale amounts", function() {
-    var amount = new Amount(1, Unit.unitFromName('cup'), 'flour');
+    var amount = new IngredientLine(1, Unit.unitFromName('cup'), 'flour');
     var scaled = amount.amountByScaling(3)
     
     assert.equal(scaled.quantity, 3)

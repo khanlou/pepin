@@ -1,5 +1,5 @@
 var Unit = require('./unit');
-var Amount = require('./Amount');
+var IngredientLine = require('./ingredient_line');
 
 var Conversion = function(unitName, scaleToAnchor) { //add wet or dry, imperial or metric, and the name of the anchor measurement
   this.unitName = unitName;
@@ -8,7 +8,7 @@ var Conversion = function(unitName, scaleToAnchor) { //add wet or dry, imperial 
 
   this.convert = function(amount, relatedConversion) {
     var quantityAtAnchor = amount.quantity * relatedConversion.scaleToAnchor;
-    return new Amount(quantityAtAnchor / this.scaleToAnchor, this.unit, amount.ingredient.name);
+    return new IngredientLine(quantityAtAnchor / this.scaleToAnchor, this.unit, amount.ingredient.name);
   }.bind(this);
 };
 
