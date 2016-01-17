@@ -28,6 +28,17 @@ describe("parser", function() {
     assert.equal(scaled.ingredientName, 'flour')
   });
   
+  it("should reduce amounts", function() {
+    var parser = new IngredientParser("1 teaspoon of kosher salt");
+    var amountString = parser.scale(3)
+    assert.equal(amountString, '1 tablespoon of kosher salt')
+  });
+  
+  it("reducing amounts should maintain the structure", function() {
+    var parser = new IngredientParser("1 teaspoon kosher salt");
+    var amountString = parser.scale(3)
+    assert.equal(amountString, '1 tablespoon kosher salt')
+  });
   
   
 });
