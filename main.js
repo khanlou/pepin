@@ -1,3 +1,5 @@
+var IngredientParser = require('./domain/parser');
+
 var IngredientBinder = function(lineItemNode) {
   this.lineItemNode = lineItemNode;
   this.textNode = lineItemNode.firstChild

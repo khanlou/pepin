@@ -1,3 +1,6 @@
+var Pattern = require('./pattern');
+var AmountPresenter = require('./presenters').AmountPresenter;
+
 var IngredientParser = function(text) {
   this.text = text;
 
@@ -12,3 +15,5 @@ var IngredientParser = function(text) {
   }.bind(this);
 
 };
+
+module.exports = IngredientParser;

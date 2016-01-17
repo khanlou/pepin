@@ -1,3 +1,6 @@
+var UnitReducer = require('./unit_reducer');
+var pluralizer = new Inflector();
+
 var AmountPresenter = function(pattern, amount) {
   this.pattern = pattern;
   this.amount = amount;
@@ -51,3 +54,6 @@ var QuantityPresenter = function(quantity) {
     this.quantityForDisplay = '' + this.quantity;
   }
 };
+
+module.exports.AmountPresenter = AmountPresenter;
+module.exports.QuantityPresenter = QuantityPresenter;

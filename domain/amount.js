@@ -30,3 +30,5 @@ var Amount = function(quantity, unit, ingredientName) {
   
   this.isValid = (this.quantity >= this.unit.smallestMeasure);
 };
+
+module.exports = Amount;

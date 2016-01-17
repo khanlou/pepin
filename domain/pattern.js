@@ -1,3 +1,6 @@
+var Unit = require('./unit');
+var Amount = require('./amount');
+
 var allUnitRegex = '(' + Unit.allUnitNames().map(function(unitName) {
   return '\\b' + unitName + '\\b'
 }).join('|') + ')';
@@ -71,3 +74,5 @@ Pattern.allPatterns = [
   new Pattern("{quantity} {ingredient}"), //an egg, 
   //{quantity} {unit} plus {quantity} {unit} {ingredient} 
 ];
+
+module.exports = Pattern;

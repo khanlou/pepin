@@ -1,6 +1,9 @@
+var Unit = require('./unit');
+var Amount = require('./Amount');
+
 var Conversion = function(unitName, scaleToAnchor) { //add wet or dry, imperial or metric, and the name of the anchor measurement
   this.unitName = unitName;
-  this.unit = Unit.unitFromName(this.unitName)
+  this.unit = Unit.unitFromName(this.unitName);
   this.scaleToAnchor = scaleToAnchor;
 
   this.convert = function(amount, relatedConversion) {
@@ -82,3 +85,5 @@ var UnitReducer = function(amount) {
     }
   }, this.amount);
 };
+
+module.exports = UnitReducer;

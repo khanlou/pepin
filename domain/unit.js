@@ -171,3 +171,5 @@ Unit.allUnitNames = function() {
     return allUnitNames.concat(unit.allPossibleNames);
   }, []);
 };
+
+module.exports = Unit;
