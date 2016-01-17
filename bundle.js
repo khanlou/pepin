@@ -499,7 +499,7 @@ var IngredientParser = function(text) {
 };
 
 module.exports = IngredientParser;
-},{"./pattern":5,"./presenters":6}],5:[function(require,module,exports){
+},{"./pattern":5,"./presenters":7}],5:[function(require,module,exports){
 var Unit = require('./unit');
 var Amount = require('./amount');
 
@@ -578,7 +578,38 @@ Pattern.allPatterns = [
 ];
 
 module.exports = Pattern;
-},{"./amount":2,"./unit":7}],6:[function(require,module,exports){
+},{"./amount":2,"./unit":8}],6:[function(require,module,exports){
+if (!Array.prototype.find) {
+  Array.prototype.find = function(predicate) {
+    if (this === null) {
+      throw new TypeError('Array.prototype.find called on null or undefined');
+    }
+    if (typeof predicate !== 'function') {
+      throw new TypeError('predicate must be a function');
+    }
+    var list = Object(this);
+    var length = list.length >>> 0;
+    var thisArg = arguments[1];
+    var value;
+
+    for (var i = 0; i < length; i++) {
+      value = list[i];
+      if (predicate.call(thisArg, value, i, list)) {
+        return value;
+      }
+    }
+    return undefined;
+  };
+}
+
+
+if (!String.prototype.includes) {
+  String.prototype.includes = function() {'use strict';
+    return String.prototype.indexOf.apply(this, arguments) !== -1;
+  };
+}
+
+},{}],7:[function(require,module,exports){
 var Inflector = require('./inflector');
 var inflector = new Inflector();
 
@@ -641,7 +672,9 @@ var QuantityPresenter = function(quantity) {
 
 module.exports.AmountPresenter = AmountPresenter;
 module.exports.QuantityPresenter = QuantityPresenter;
-},{"./inflector":3,"./unit_reducer":8}],7:[function(require,module,exports){
+},{"./inflector":3,"./unit_reducer":9}],8:[function(require,module,exports){
+var polyfills = require('./polyfills');
+
 var Inflector = require('./inflector');
 
 var inflector = new Inflector();
@@ -819,7 +852,7 @@ Unit.allUnitNames = function() {
 };
 
 module.exports = Unit;
-},{"./inflector":3}],8:[function(require,module,exports){
+},{"./inflector":3,"./polyfills":6}],9:[function(require,module,exports){
 var Unit = require('./unit');
 var Amount = require('./Amount');
 
@@ -910,7 +943,7 @@ var UnitReducer = function(amount) {
 
 module.exports = UnitReducer;
 
-},{"./Amount":1,"./unit":7}],9:[function(require,module,exports){
+},{"./Amount":1,"./unit":8}],10:[function(require,module,exports){
 var IngredientParser = require('./domain/parser');
 
 var IngredientBinder = function(lineItemNode) {
@@ -941,4 +974,4 @@ var tangle = new Tangle(document.getElementById('scaler'), {
   },
 });
 
-},{"./domain/parser":4}]},{},[9]);
+},{"./domain/parser":4}]},{},[10]);
