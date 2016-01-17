@@ -54,8 +54,3 @@ describe("amount", function() {
   
   
 });
-
-//test plurals
-//test reducing
-//test scaling
-//test different patterns

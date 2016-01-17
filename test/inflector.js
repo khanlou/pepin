@@ -24,8 +24,3 @@ describe("inflector", function() {
     assert.equal(string, 'cup');
   });
 });
-
-//test plurals
-//test reducing
-//test scaling
-//test different patterns
