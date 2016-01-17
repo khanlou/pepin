@@ -1,0 +1,15 @@
+{
+  "name": "cookbook",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.4",
+    "assert": "1.3.0"
+  },
+  "dependencies": {
+  }
+}
+ 
