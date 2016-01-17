@@ -8,7 +8,7 @@ describe("amount", function() {
     
     assert.equal(amount.quantity, 1);
     assert.equal(amount.unit.name, 'cup');
-    assert.equal(amount.ingredientName, 'flour');
+    assert.equal(amount.ingredient.name, 'flour');
   });
   
   it("amounts should parse 'a'", function() {
@@ -16,7 +16,7 @@ describe("amount", function() {
     
     assert.equal(amount.quantity, 1);
     assert.equal(amount.unit.name, 'cup');
-    assert.equal(amount.ingredientName, 'flour');
+    assert.equal(amount.ingredient.name, 'flour');
   });
 
   it("amounts should parse 'an'", function() {
@@ -24,7 +24,7 @@ describe("amount", function() {
     
     assert.equal(amount.quantity, 1);
     assert.equal(amount.unit.name, 'ounce');
-    assert.equal(amount.ingredientName, 'flour');
+    assert.equal(amount.ingredient.name, 'flour');
   });
   
   it("amounts should parse fractions", function() {
@@ -32,7 +32,7 @@ describe("amount", function() {
     
     assert.equal(amount.quantity, 0.75);
     assert.equal(amount.unit.name, 'cup');
-    assert.equal(amount.ingredientName, 'flour');
+    assert.equal(amount.ingredient.name, 'flour');
   });
   
   it("amounts should parse decimals", function() {
@@ -40,7 +40,7 @@ describe("amount", function() {
     
     assert.equal(amount.quantity, 0.25);
     assert.equal(amount.unit.name, 'cup');
-    assert.equal(amount.ingredientName, 'flour');
+    assert.equal(amount.ingredient.name, 'flour');
   });
   
   it("should scale amounts", function() {
@@ -49,7 +49,7 @@ describe("amount", function() {
     
     assert.equal(scaled.quantity, 3)
     assert.equal(scaled.unit.name, 'cup')
-    assert.equal(scaled.ingredientName, 'flour')
+    assert.equal(scaled.ingredient.name, 'flour')
   });
   
   

@@ -8,7 +8,7 @@ var Conversion = function(unitName, scaleToAnchor) { //add wet or dry, imperial 
 
   this.convert = function(amount, relatedConversion) {
     var quantityAtAnchor = amount.quantity * relatedConversion.scaleToAnchor;
-    return new Amount(quantityAtAnchor / this.scaleToAnchor, this.unit, amount.ingredientName);
+    return new Amount(quantityAtAnchor / this.scaleToAnchor, this.unit, amount.ingredient.name);
   }.bind(this);
 };
 

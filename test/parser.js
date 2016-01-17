@@ -7,7 +7,7 @@ describe("parser", function() {
     var amount = parser.amount;
     assert.equal(amount.quantity, 1)
     assert.equal(amount.unit.name, 'cup')
-    assert.equal(amount.ingredientName, 'flour')
+    assert.equal(amount.ingredient.name, 'flour')
   });
 
   it("should parse ingredient lines with 'of'", function() {
@@ -15,7 +15,7 @@ describe("parser", function() {
     var amount = parser.amount;
     assert.equal(amount.quantity, 1)
     assert.equal(amount.unit.name, 'cup')
-    assert.equal(amount.ingredientName, 'flour')
+    assert.equal(amount.ingredient.name, 'flour')
   });
 
   it("should scale ingredient lines", function() {
@@ -25,7 +25,7 @@ describe("parser", function() {
     
     assert.equal(scaled.quantity, 3)
     assert.equal(scaled.unit.name, 'cup')
-    assert.equal(scaled.ingredientName, 'flour')
+    assert.equal(scaled.ingredient.name, 'flour')
   });
   
   it("should reduce amounts", function() {

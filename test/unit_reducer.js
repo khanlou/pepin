@@ -11,7 +11,7 @@ describe("unit reducer", function() {
     var reducedAmount = unitReducer.reducedAmount;
     assert.equal(reducedAmount.quantity, 1);
     assert.equal(reducedAmount.unit.name, 'tablespoon');
-    assert.equal(reducedAmount.ingredientName, 'flour');
+    assert.equal(reducedAmount.ingredient.name, 'flour');
   });
   
   it("shouldn't reduce irreducable units", function() {
@@ -20,7 +20,7 @@ describe("unit reducer", function() {
     var reducedAmount = unitReducer.reducedAmount;
     assert.equal(reducedAmount.quantity, 3);
     assert.equal(reducedAmount.unit.name, 'cup');
-    assert.equal(reducedAmount.ingredientName, 'flour');
+    assert.equal(reducedAmount.ingredient.name, 'flour');
   });
   
 

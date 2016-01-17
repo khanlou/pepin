@@ -22,11 +22,11 @@ var Amount = function(quantity, unit, ingredientName) {
   }
 
   this.unit = unit;
-  this.ingredientName = ingredientName;
+  this.ingredient = { name: ingredientName };
 
 
   this.amountByScaling = function(scalingFactor) {
-    return new Amount(this.quantity * scalingFactor, this.unit, this.ingredientName);
+    return new Amount(this.quantity * scalingFactor, this.unit, this.ingredient.name);
   }.bind(this);
   
   this.isValid = (this.quantity >= this.unit.smallestMeasure);
@@ -625,7 +625,7 @@ var AmountPresenter = function(pattern, amount) {
   this.stringForDisplay = this.pattern.inject(
     new QuantityPresenter(this.reducedAmount.quantity).quantityForDisplay,
     inflector.pluralizeWithCount(this.reducedAmount.unit.name, this.reducedAmount.quantity),
-    this.reducedAmount.ingredientName
+    this.reducedAmount.ingredient.name
   );
 };
 
@@ -863,7 +863,7 @@ var Conversion = function(unitName, scaleToAnchor) { //add wet or dry, imperial 
 
   this.convert = function(amount, relatedConversion) {
     var quantityAtAnchor = amount.quantity * relatedConversion.scaleToAnchor;
-    return new Amount(quantityAtAnchor / this.scaleToAnchor, this.unit, amount.ingredientName);
+    return new Amount(quantityAtAnchor / this.scaleToAnchor, this.unit, amount.ingredient.name);
   }.bind(this);
 };
 

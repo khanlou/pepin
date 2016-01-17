@@ -21,11 +21,11 @@ var Amount = function(quantity, unit, ingredientName) {
   }
 
   this.unit = unit;
-  this.ingredientName = ingredientName;
+  this.ingredient = { name: ingredientName };
 
 
   this.amountByScaling = function(scalingFactor) {
-    return new Amount(this.quantity * scalingFactor, this.unit, this.ingredientName);
+    return new Amount(this.quantity * scalingFactor, this.unit, this.ingredient.name);
   }.bind(this);
   
   this.isValid = (this.quantity >= this.unit.smallestMeasure);

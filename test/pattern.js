@@ -19,7 +19,7 @@ describe("pattern", function() {
     
     assert.equal(amount.quantity, 1);
     assert.equal(amount.unit.name, 'cup');
-    assert.equal(amount.ingredientName, 'flour');
+    assert.equal(amount.ingredient.name, 'flour');
   });
   
   it("should inject", function() {
