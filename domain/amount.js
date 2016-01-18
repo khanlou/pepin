@@ -29,6 +29,10 @@ var Amount = function(quantity, unit) {
   }.bind(this);
   
   this.isValid = this.unit.isValidQuantity(this.quantity);
+  
+  this.toString = function() {
+    return '' + this.quantity + ' ' + this.unit.name;
+  }
 };
 
 module.exports = Amount;
