@@ -10,7 +10,7 @@ describe("amount presenter", function() {
     var amount = new Amount(1, Unit.unitFromName('cup'));
     var amountPresenter = new AmountPresenter(amount);
     var amounts = amountPresenter.amounts;
-    assert.equal(amounts.length, 1)
+    assert.equal(amounts.length, 1);
     var firstAmount = amounts[0];
     assert.equal(firstAmount.quantity, 1);
     assert.equal(firstAmount.unit.name, 'cup');
@@ -21,7 +21,7 @@ describe("amount presenter", function() {
 
     var amountPresenter = new AmountPresenter(amount);
     var amounts = amountPresenter.amounts;
-    assert.equal(amounts.length, 2)
+    assert.equal(amounts.length, 2);
     
     var firstAmount = amounts[0];
     assert.equal(firstAmount.quantity, 0.25);
@@ -37,7 +37,7 @@ describe("amount presenter", function() {
     var amountPresenter = new AmountPresenter(amount);
     var amounts = amountPresenter.amounts;
     
-    assert.equal(amounts.length, 2)
+    assert.equal(amounts.length, 2);
     
     var firstAmount = amounts[0];
     assert.equal(firstAmount.quantity, 1);

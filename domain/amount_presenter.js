@@ -19,11 +19,11 @@ var AmountPresenter = function(unreducedAmount) {
 
     var integerMutipleOfSmallestAcceptableUnit = Math.floor(mutipleOfSmallestAcceptableUnit);
     var acceptableQuantityInCurrentUnit = integerMutipleOfSmallestAcceptableUnit * this.unit.smallestMeasure;
-    var remainderForUseInSmallerUnit = this.quantity - acceptableQuantityInCurrentUnit
-    var amountRemaining = new Amount(remainderForUseInSmallerUnit, this.unit)
+    var remainderForUseInSmallerUnit = this.quantity - acceptableQuantityInCurrentUnit;
+    var amountRemaining = new Amount(remainderForUseInSmallerUnit, this.unit);
 
     return [new Amount(acceptableQuantityInCurrentUnit, this.unit)]
-      .concat(new AmountPresenter(amountRemaining).amounts)
+      .concat(new AmountPresenter(amountRemaining).amounts);
   }.bind(this)()
 };
 
