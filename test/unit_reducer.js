@@ -21,6 +21,14 @@ describe("unit reducer", function() {
     assert.equal(reducedAmount.unit.name, 'cup');
   });
   
+  it("shouldn't reduce whole units", function() {
+    var amount = new Amount(3, null);
+    var unitReducer = new UnitReducer(amount);
+    var reducedAmount = unitReducer.reducedAmount;
+    assert.equal(reducedAmount.quantity, 3);
+    assert.equal(reducedAmount.unit.name, '');
+  });
+  
   it("should scale down as well as up", function() {
     var amount = new Amount(0.125, Unit.unitFromName('cups'));
     var unitReducer = new UnitReducer(amount);

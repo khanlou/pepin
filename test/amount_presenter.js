@@ -47,6 +47,20 @@ describe("amount presenter", function() {
     assert.equal(secondAmount.quantity, 2);
     assert.equal(secondAmount.unit.name, 'teaspoon');
   });
+  
+  
+  it("should present whole amounts", function() {
+    var amount = new Amount(2, null);
+    var amountPresenter = new AmountPresenter(amount);
+    var amounts = amountPresenter.amounts;
+    
+    assert.equal(amounts.length, 1);
+    
+    var firstAmount = amounts[0];
+    assert.equal(firstAmount.quantity, 2);
+    assert.equal(firstAmount.unit.name, '');
+  });
+  
 
 });
 

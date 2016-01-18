@@ -60,6 +60,11 @@ var conversionTables = [
 
 var UnitReducer = function(amount) {
   this.amount = amount;
+  
+  if (this.amount.unit.isWhole) {
+    this.reducedAmount = this.amount;
+    return;
+  }
 
   this.conversionTable = conversionTables.find(function(conversionTable) {
     return conversionTable.conversions.some(function(conversion) {
