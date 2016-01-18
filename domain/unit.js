@@ -23,6 +23,10 @@ var Unit = function(properties) {
   this.canBeCalled = function(name) {
     return this.allPossibleNames.indexOf(name) !== -1
   }.bind(this);
+  
+  this.isValidQuantity = function(quantity) {
+    return quantity >= this.smallestMeasure
+  }.bind(this)
 };
 
 var allUnits = [

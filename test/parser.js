@@ -9,6 +9,15 @@ describe("parser", function() {
     assert.equal(ingredientLine.amount.unit.name, 'cup')
     assert.equal(ingredientLine.ingredient.name, 'flour')
   });
+  
+  it("should parse ingredients with no unit", function() {
+    var parser = new IngredientParser("an egg");
+    var ingredientLine = parser.ingredientLine;
+    assert.equal(ingredientLine.amount.quantity, 1)
+    assert.equal(ingredientLine.amount.unit.name, '')
+    assert.equal(ingredientLine.ingredient.name, 'egg')
+  });
+  
 
   it("should parse ingredient lines with 'of'", function() {
     var parser = new IngredientParser("1 cup of flour");

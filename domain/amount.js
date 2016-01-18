@@ -1,3 +1,5 @@
+var WholeUnit = require('./whole_unit');
+
 var Amount = function(quantity, unit) {
   
   this.parseQuantity = function(quantityAsString) {
@@ -20,13 +22,13 @@ var Amount = function(quantity, unit) {
     this.quantity = quantity;
   }
 
-  this.unit = unit;
-
+  this.unit = unit || new WholeUnit();
+  
   this.amountByScaling = function(scalingFactor) {
     return new Amount(this.quantity * scalingFactor, this.unit);
   }.bind(this);
   
-  this.isValid = (this.quantity >= this.unit.smallestMeasure);
+  this.isValid = this.unit.isValidQuantity(this.quantity);
 };
 
 module.exports = Amount;
