@@ -2,7 +2,7 @@ var Unit = require('../domain/unit');
 var Amount = require('../domain/amount');
 var assert = require('assert');
 
-describe("ingredient line", function() {
+describe("amount", function() {
 
   it("amount should be constructed", function() {
     var amount = new Amount(1, Unit.unitFromName('cup'));
