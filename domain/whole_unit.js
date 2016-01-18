@@ -3,6 +3,7 @@ var WholeUnit = function() {
   this.alternateNames = []
   this.plural = '';
   this.system = 'both';
+  this.isWhole = true;
   this.isValidQuantity = function(quantity) {
     return true;
   };

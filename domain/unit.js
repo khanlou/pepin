@@ -17,6 +17,7 @@ var Unit = function(properties) {
   this.system = properties.system;
   this.measure = properties.measure;
   this.smallestMeasure = properties.smallestMeasure || 1;
+  this.isWhole = false;
 
   this.allPossibleNames = [this.name, this.plural].concat(this.alternateNames);
 
