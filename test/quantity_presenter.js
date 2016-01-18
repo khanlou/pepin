@@ -1,4 +1,4 @@
-var QuantityPresenter = require('../domain/presenters').QuantityPresenter;
+var QuantityPresenter = require('../domain/quantity_presenter');
 var assert = require('assert');
 
 describe("quantity presenter", function() {

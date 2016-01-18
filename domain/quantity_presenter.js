@@ -1,21 +1,3 @@
-var Inflector = require('./inflector');
-var inflector = new Inflector();
-
-var UnitReducer = require('./unit_reducer');
-
-
-var AmountPresenter = function(pattern, ingredientLine) {
-  this.pattern = pattern;
-  this.ingredientLine = ingredientLine;
-  this.unitReducer = new UnitReducer(this.ingredientLine.amount);
-  this.reducedAmount = this.unitReducer.reducedAmount;
-  
-  this.stringForDisplay = this.pattern.inject(
-    new QuantityPresenter(this.reducedAmount.quantity).quantityForDisplay,
-    inflector.pluralizeWithCount(this.reducedAmount.unit.name, this.reducedAmount.quantity),
-    this.ingredientLine.ingredient.name
-  );
-};
 
 var QuantityPresenter = function(quantity) {
   this.quantity = quantity;
@@ -58,5 +40,4 @@ var QuantityPresenter = function(quantity) {
   }
 };
 
-module.exports.AmountPresenter = AmountPresenter;
-module.exports.QuantityPresenter = QuantityPresenter;
+module.exports = QuantityPresenter;

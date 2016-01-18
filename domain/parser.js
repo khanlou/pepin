@@ -1,5 +1,5 @@
 var Pattern = require('./pattern');
-var AmountPresenter = require('./presenters').AmountPresenter;
+var AmountPresenter = require('./amount_presenter');
 
 var IngredientParser = function(text) {
   this.text = text;

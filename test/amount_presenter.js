@@ -1,4 +1,4 @@
-var AmountPresenter = require('../domain/presenters').AmountPresenter;
+var AmountPresenter = require('../domain/amount_presenter');
 var Pattern = require('../domain/pattern');
 var IngredientLine = require('../domain/ingredient_line');
 var Amount = require('../domain/amount');
