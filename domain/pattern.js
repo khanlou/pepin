@@ -57,11 +57,12 @@ var Pattern = function(template) {
     return new IngredientLine(new Amount(quantity, unit), ingredientName);
   }.bind(this);
 
-  this.inject = function(quantity, unit, ingredientName) {
+  this.inject = function(injectables) {
     var injected = this.template;
-    injected = injected.replace('{quantity}', quantity);
-    injected = injected.replace('{unit}', unit);
-    injected = injected.replace('{ingredient}', ingredientName);
+    for (var key in injectables) {
+      var value = injectables[key];
+      injected = injected.replace(key, value);
+    }
     return injected;
   }.bind(this);
 };

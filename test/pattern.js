@@ -23,7 +23,11 @@ describe("pattern", function() {
   });
   
   it("should inject", function() {
-    var injected = pattern.inject("bingo", "bango", "bongo")
+    var injected = pattern.inject({
+      "{quantity}": "bingo",
+      "{unit}": "bango",
+      "{ingredient}": "bongo",
+    });
     
     assert.equal(injected, "bingo bango of bongo");
   });
