@@ -5,7 +5,7 @@ var AmountPresenter = function(unreducedAmount) {
   this.amount = new UnitReducer(unreducedAmount).reducedAmount;
 
   this.quantity = this.amount.quantity;
-  this.unit = this.amount.unit
+  this.unit = this.amount.unit;
 
   this.amounts = function() {
     if (this.unit.isWhole) {
