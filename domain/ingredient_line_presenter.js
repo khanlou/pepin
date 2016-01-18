@@ -4,7 +4,7 @@ var QuantityPresenter = require('./quantity_presenter');
 var Inflector = require('./inflector');
 var inflector = new Inflector();
 
-var AmountPresenter = function(pattern, ingredientLine) {
+var IngredientLinePresenter = function(pattern, ingredientLine) {
   this.pattern = pattern;
   this.ingredientLine = ingredientLine;
   this.unitReducer = new UnitReducer(this.ingredientLine.amount);
@@ -17,4 +17,4 @@ var AmountPresenter = function(pattern, ingredientLine) {
   );
 };
 
-module.exports = AmountPresenter;
+module.exports = IngredientLinePresenter;

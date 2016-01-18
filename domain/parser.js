@@ -1,5 +1,5 @@
 var Pattern = require('./pattern');
-var AmountPresenter = require('./amount_presenter');
+var IngredientLinePresenter = require('./ingredient_line_presenter');
 
 var IngredientParser = function(text) {
   this.text = text;
@@ -11,7 +11,7 @@ var IngredientParser = function(text) {
   this.ingredientLine = this.matchingPattern.parse(this.text);
 
   this.scale = function(scalingFactor) {
-    return new AmountPresenter(this.matchingPattern, this.ingredientLine.ingredientLineByScaling(scalingFactor)).stringForDisplay;
+    return new IngredientLinePresenter(this.matchingPattern, this.ingredientLine.ingredientLineByScaling(scalingFactor)).stringForDisplay;
   }.bind(this);
 
 };

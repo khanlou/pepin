@@ -495,7 +495,7 @@ var IngredientLine = function(amount, ingredient) {
 module.exports = IngredientLine;
 },{"./amount":1}],4:[function(require,module,exports){
 var Pattern = require('./pattern');
-var AmountPresenter = require('./presenters').AmountPresenter;
+var IngredientLinePresenter = require('./presenters').IngredientLinePresenter;
 
 var IngredientParser = function(text) {
   this.text = text;
@@ -507,7 +507,7 @@ var IngredientParser = function(text) {
   this.ingredientLine = this.matchingPattern.parse(this.text);
 
   this.scale = function(scalingFactor) {
-    return new AmountPresenter(this.matchingPattern, this.ingredientLine.ingredientLineByScaling(scalingFactor)).stringForDisplay;
+    return new IngredientLinePresenter(this.matchingPattern, this.ingredientLine.ingredientLineByScaling(scalingFactor)).stringForDisplay;
   }.bind(this);
 
 };
@@ -631,7 +631,7 @@ var inflector = new Inflector();
 var UnitReducer = require('./unit_reducer');
 
 
-var AmountPresenter = function(pattern, ingredientLine) {
+var IngredientLinePresenter = function(pattern, ingredientLine) {
   this.pattern = pattern;
   this.ingredientLine = ingredientLine;
   this.unitReducer = new UnitReducer(this.ingredientLine.amount);
@@ -685,7 +685,7 @@ var QuantityPresenter = function(quantity) {
   }
 };
 
-module.exports.AmountPresenter = AmountPresenter;
+module.exports.IngredientLinePresenter = IngredientLinePresenter;
 module.exports.QuantityPresenter = QuantityPresenter;
 },{"./inflector":2,"./unit_reducer":9}],8:[function(require,module,exports){
 var polyfills = require('./polyfills');
