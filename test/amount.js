@@ -10,6 +10,23 @@ describe("ingredient line", function() {
     assert.equal(amount.quantity, 1);
     assert.equal(amount.unit.name, 'cup');
   });
+  
+  
+  it("should scale amounts", function() {
+    var amount = new Amount(1, Unit.unitFromName('cup'))
+    var scaled = amount.amountByScaling(3);
+    
+    assert.equal(scaled.quantity, 3);
+    assert.equal(scaled.unit.name, 'cup');
+  });
+  
+  
+  it("whole units should scale", function() {
+    var amount = new Amount('2', undefined);
+    var scaled = amount.amountByScaling(3);
+    assert.equal(scaled.quantity, 6);
+    assert.equal(scaled.unit.name, '');
+  });
 
   it("amounts should parse 'a'", function() {
     var amount = new Amount('a', Unit.unitFromName('cup'));

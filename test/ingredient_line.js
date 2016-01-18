@@ -7,11 +7,11 @@ describe("ingredient line", function() {
   
   it("should scale ingredient lines", function() {
     var ingredientLine = new IngredientLine(new Amount(1, Unit.unitFromName('cup')), 'flour');
-    var scaled = ingredientLine.ingredientLineByScaling(3)
+    var scaled = ingredientLine.ingredientLineByScaling(3);
     
-    assert.equal(scaled.amount.quantity, 3)
-    assert.equal(scaled.amount.unit.name, 'cup')
-    assert.equal(scaled.ingredient.name, 'flour')
+    assert.equal(scaled.amount.quantity, 3);
+    assert.equal(scaled.amount.unit.name, 'cup');
+    assert.equal(scaled.ingredient.name, 'flour');
   });
   
   
