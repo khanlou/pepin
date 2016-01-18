@@ -21,5 +21,13 @@ describe("unit reducer", function() {
     assert.equal(reducedAmount.unit.name, 'cup');
   });
   
+  it("should scale down as well as up", function() {
+    var amount = new Amount(0.125, Unit.unitFromName('cups'));
+    var unitReducer = new UnitReducer(amount);
+    var reducedAmount = unitReducer.reducedAmount;
+    assert.equal(reducedAmount.quantity, 2);
+    assert.equal(reducedAmount.unit.name, 'tablespoon');
+  });
+  
 
 });

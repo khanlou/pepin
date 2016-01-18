@@ -78,6 +78,9 @@ var UnitReducer = function(amount) {
   }.bind(this));
 
   this.reducedAmount = this.convertedAmounts.reduce(function(bestConvertedAmount, convertedAmount) {
+    if (!bestConvertedAmount.isValid) {
+      return convertedAmount
+    }
     if (convertedAmount.isValid && convertedAmount.quantity < bestConvertedAmount.quantity) {
       return convertedAmount;
     } else {
