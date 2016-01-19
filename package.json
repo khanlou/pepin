@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "build": "browserify main.js -o bundle.js"
   },
   "devDependencies": {
     "mocha": "^2.3.4",
