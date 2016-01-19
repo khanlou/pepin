@@ -30,6 +30,9 @@ describe("amount presenter", function() {
     var secondAmount = amounts[1];
     assert.equal(secondAmount.quantity, 2);
     assert.equal(secondAmount.unit.name, 'tablespoon');
+    
+    assert.equal(amountPresenter.amountForDisplay, "¼ cups + 2 tablespoons");
+    
   });
   
   it("should present amounts with two components with teaspoons", function() {
@@ -46,8 +49,30 @@ describe("amount presenter", function() {
     var secondAmount = amounts[1];
     assert.equal(secondAmount.quantity, 2);
     assert.equal(secondAmount.unit.name, 'teaspoon');
+    
+    assert.equal(amountPresenter.amountForDisplay, "1 tablespoon + 2 teaspoons");
+    
   });
   
+  it("should present amounts with two components with crazy cup size", function() {
+    var amount = new Amount(13, Unit.unitFromName('teaspoons'));
+    var amountPresenter = new AmountPresenter(amount);
+    var amounts = amountPresenter.amounts;
+    
+    assert.equal(amounts.length, 2);
+    
+    var firstAmount = amounts[0];
+    assert.equal(firstAmount.quantity, 0.25);
+    assert.equal(firstAmount.unit.name, 'cup');
+    
+    var secondAmount = amounts[1];
+    assert.equal(secondAmount.quantity, 1);
+    assert.equal(secondAmount.unit.name, 'teaspoon');
+        
+    assert.equal(amountPresenter.amountForDisplay, "¼ cups + 1 teaspoon");
+    
+  });
+    
   
   it("should present whole amounts", function() {
     var amount = new Amount(2, null);
@@ -59,9 +84,9 @@ describe("amount presenter", function() {
     var firstAmount = amounts[0];
     assert.equal(firstAmount.quantity, 2);
     assert.equal(firstAmount.unit.name, '');
+    
+    assert.equal(amountPresenter.amountForDisplay, "2");
   });
   
 
 });
-
-// test whole amounts

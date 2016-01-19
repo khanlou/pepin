@@ -1,4 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var WholeUnit = require('./whole_unit');
+
 var Amount = function(quantity, unit) {
   
   this.parseQuantity = function(quantityAsString) {
@@ -21,17 +23,67 @@ var Amount = function(quantity, unit) {
     this.quantity = quantity;
   }
 
-  this.unit = unit;
-
+  this.unit = unit || new WholeUnit();
+  
   this.amountByScaling = function(scalingFactor) {
     return new Amount(this.quantity * scalingFactor, this.unit);
   }.bind(this);
   
-  this.isValid = (this.quantity >= this.unit.smallestMeasure);
+  this.isValid = this.unit.isValidQuantity(this.quantity);
+  
+  this.toString = function() {
+    return '' + this.quantity + ' ' + this.unit.name;
+  }
 };
 
 module.exports = Amount;
-},{}],2:[function(require,module,exports){
+},{"./whole_unit":12}],2:[function(require,module,exports){
+var Amount = require('./amount');
+var UnitReducer = require('./unit_reducer');
+var QuantityPresenter = require('./quantity_presenter');
+
+var Inflector = require('./inflector');
+var inflector = new Inflector();
+
+var AmountPresenter = function(unreducedAmount) {
+  this.amount = new UnitReducer(unreducedAmount).reducedAmount;
+
+  this.quantity = this.amount.quantity;
+  this.unit = this.amount.unit;
+  
+  this.amounts = function() {
+    if (this.unit.isWhole) {
+      return [this.amount];
+    }
+
+    var multipleOfSmallestAcceptableUnit = this.quantity / this.unit.smallestMeasure;
+    if (Number.isInteger(multipleOfSmallestAcceptableUnit)) {
+      return [this.amount];
+    }
+    
+    var integerMultipleOfSmallestAcceptableUnit = Math.floor(multipleOfSmallestAcceptableUnit+0.001);
+    var acceptableQuantityInCurrentUnit = integerMultipleOfSmallestAcceptableUnit * this.unit.smallestMeasure;
+    var remainderForUseInSmallerUnit = this.quantity - acceptableQuantityInCurrentUnit;
+    if (remainderForUseInSmallerUnit < 0.00001) {
+      return [new Amount(acceptableQuantityInCurrentUnit, this.unit)]
+    }
+    var amountRemaining = new Amount(remainderForUseInSmallerUnit, this.unit);
+
+    return [new Amount(acceptableQuantityInCurrentUnit, this.unit)]
+      .concat(new AmountPresenter(amountRemaining).amounts);
+  }.bind(this)();
+  
+  this.amountForDisplay = this.amounts
+    .map(function(amount) {
+      var quantity = new QuantityPresenter(amount.quantity).quantityForDisplay;
+      var unit = inflector.pluralizeWithCount(amount.unit.name, amount.quantity);
+      return (quantity + ' ' + unit).trim();
+    }.bind(this)).join(' + ');
+};
+
+module.exports = AmountPresenter;
+
+},{"./amount":1,"./inflector":3,"./quantity_presenter":9,"./unit_reducer":11}],3:[function(require,module,exports){
 var Inflector = function() {
   
   var self = this;
@@ -475,7 +527,7 @@ var Inflector = function() {
 };
 
 module.exports = Inflector;
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 var Amount = require('./amount');
 
 var IngredientLine = function(amount, ingredient) {
@@ -493,9 +545,30 @@ var IngredientLine = function(amount, ingredient) {
 };
 
 module.exports = IngredientLine;
-},{"./amount":1}],4:[function(require,module,exports){
+},{"./amount":1}],5:[function(require,module,exports){
+var UnitReducer = require('./unit_reducer');
+var AmountPresenter = require('./amount_presenter');
+
+var Inflector = require('./inflector');
+var inflector = new Inflector();
+
+var IngredientLinePresenter = function(pattern, ingredientLine) {
+  this.pattern = pattern;
+  this.ingredientLine = ingredientLine;
+  this.amountPresenter = new AmountPresenter(this.ingredientLine.amount);
+  
+  this.stringForDisplay = this.pattern.inject({
+    "{quantity} {unit}": this.amountPresenter.amountForDisplay,
+    "{quantity}": this.amountPresenter.amountForDisplay,
+    "{ingredient}": this.ingredientLine.ingredient.name,
+  });
+};
+
+module.exports = IngredientLinePresenter;
+
+},{"./amount_presenter":2,"./inflector":3,"./unit_reducer":11}],6:[function(require,module,exports){
 var Pattern = require('./pattern');
-var IngredientLinePresenter = require('./presenters').IngredientLinePresenter;
+var IngredientLinePresenter = require('./ingredient_line_presenter');
 
 var IngredientParser = function(text) {
   this.text = text;
@@ -513,7 +586,7 @@ var IngredientParser = function(text) {
 };
 
 module.exports = IngredientParser;
-},{"./pattern":5,"./presenters":7}],5:[function(require,module,exports){
+},{"./ingredient_line_presenter":5,"./pattern":7}],7:[function(require,module,exports){
 var Unit = require('./unit');
 var IngredientLine = require('./ingredient_line');
 var Amount = require('./amount');
@@ -573,11 +646,12 @@ var Pattern = function(template) {
     return new IngredientLine(new Amount(quantity, unit), ingredientName);
   }.bind(this);
 
-  this.inject = function(quantity, unit, ingredientName) {
+  this.inject = function(injectables) {
     var injected = this.template;
-    injected = injected.replace('{quantity}', quantity);
-    injected = injected.replace('{unit}', unit);
-    injected = injected.replace('{ingredient}', ingredientName);
+    for (var key in injectables) {
+      var value = injectables[key];
+      injected = injected.replace(key, value);
+    }
     return injected;
   }.bind(this);
 };
@@ -593,7 +667,8 @@ Pattern.allPatterns = [
 ];
 
 module.exports = Pattern;
-},{"./amount":1,"./ingredient_line":3,"./unit":8}],6:[function(require,module,exports){
+
+},{"./amount":1,"./ingredient_line":4,"./unit":10}],8:[function(require,module,exports){
 if (!Array.prototype.find) {
   Array.prototype.find = function(predicate) {
     if (this === null) {
@@ -624,25 +699,13 @@ if (!String.prototype.includes) {
   };
 }
 
-},{}],7:[function(require,module,exports){
-var Inflector = require('./inflector');
-var inflector = new Inflector();
+if (!Number.isInteger) {
+  Number.isInteger = function isInteger (nVal) {
+    return typeof nVal === "number" && isFinite(nVal) && nVal > -9007199254740992 && nVal < 9007199254740992 && (Math.floor(nVal) - nVal < 0.001);
+  };
+}
 
-var UnitReducer = require('./unit_reducer');
-
-
-var IngredientLinePresenter = function(pattern, ingredientLine) {
-  this.pattern = pattern;
-  this.ingredientLine = ingredientLine;
-  this.unitReducer = new UnitReducer(this.ingredientLine.amount);
-  this.reducedAmount = this.unitReducer.reducedAmount;
-  
-  this.stringForDisplay = this.pattern.inject(
-    new QuantityPresenter(this.reducedAmount.quantity).quantityForDisplay,
-    inflector.pluralizeWithCount(this.reducedAmount.unit.name, this.reducedAmount.quantity),
-    this.ingredientLine.ingredient.name
-  );
-};
+},{}],9:[function(require,module,exports){
 
 var QuantityPresenter = function(quantity) {
   this.quantity = quantity;
@@ -685,9 +748,8 @@ var QuantityPresenter = function(quantity) {
   }
 };
 
-module.exports.IngredientLinePresenter = IngredientLinePresenter;
-module.exports.QuantityPresenter = QuantityPresenter;
-},{"./inflector":2,"./unit_reducer":9}],8:[function(require,module,exports){
+module.exports = QuantityPresenter;
+},{}],10:[function(require,module,exports){
 var polyfills = require('./polyfills');
 
 var Inflector = require('./inflector');
@@ -707,12 +769,17 @@ var Unit = function(properties) {
   this.system = properties.system;
   this.measure = properties.measure;
   this.smallestMeasure = properties.smallestMeasure || 1;
+  this.isWhole = false;
 
   this.allPossibleNames = [this.name, this.plural].concat(this.alternateNames);
 
   this.canBeCalled = function(name) {
     return this.allPossibleNames.indexOf(name) !== -1
   }.bind(this);
+  
+  this.isValidQuantity = function(quantity) {
+    return quantity >= this.smallestMeasure
+  }.bind(this)
 };
 
 var allUnits = [
@@ -867,7 +934,7 @@ Unit.allUnitNames = function() {
 };
 
 module.exports = Unit;
-},{"./inflector":2,"./polyfills":6}],9:[function(require,module,exports){
+},{"./inflector":3,"./polyfills":8}],11:[function(require,module,exports){
 var Unit = require('./unit');
 var Amount = require('./amount');
 
@@ -930,6 +997,11 @@ var conversionTables = [
 
 var UnitReducer = function(amount) {
   this.amount = amount;
+  
+  if (this.amount.unit.isWhole) {
+    this.reducedAmount = this.amount;
+    return;
+  }
 
   this.conversionTable = conversionTables.find(function(conversionTable) {
     return conversionTable.conversions.some(function(conversion) {
@@ -948,6 +1020,9 @@ var UnitReducer = function(amount) {
   }.bind(this));
 
   this.reducedAmount = this.convertedAmounts.reduce(function(bestConvertedAmount, convertedAmount) {
+    if (!bestConvertedAmount.isValid) {
+      return convertedAmount
+    }
     if (convertedAmount.isValid && convertedAmount.quantity < bestConvertedAmount.quantity) {
       return convertedAmount;
     } else {
@@ -958,7 +1033,20 @@ var UnitReducer = function(amount) {
 
 module.exports = UnitReducer;
 
-},{"./amount":1,"./unit":8}],10:[function(require,module,exports){
+},{"./amount":1,"./unit":10}],12:[function(require,module,exports){
+var WholeUnit = function() {
+  this.name = '';
+  this.alternateNames = []
+  this.plural = '';
+  this.system = 'both';
+  this.isWhole = true;
+  this.isValidQuantity = function(quantity) {
+    return true;
+  };
+};
+
+module.exports = WholeUnit;
+},{}],13:[function(require,module,exports){
 var IngredientParser = require('./domain/parser');
 
 var IngredientBinder = function(lineItemNode) {
@@ -989,4 +1077,4 @@ var tangle = new Tangle(document.getElementById('scaler'), {
   },
 });
 
-},{"./domain/parser":4}]},{},[10]);
+},{"./domain/parser":6}]},{},[13]);
