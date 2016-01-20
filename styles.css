@@ -78,16 +78,6 @@ a {
   .recipe-metadata div {
     padding: .4em 1em;
   }
-  
-  .recipe-description-metadata { 
-    display: block;
-  }
-  
-  .recipe-metadata {
-    margin-to: 10px;
-    margin-left: 0; 
-  }
-  
 }
 
 @media (min-width: 1200px) {
@@ -117,3 +107,13 @@ a {
   white-space: nowrap;
 }
 
+@media (max-width: 700px) {
+  .recipe-description-metadata { 
+    display: block;
+  }
+  
+  .recipe-metadata {
+    margin-to: 10px;
+    margin-left: 0; 
+  }
+}
