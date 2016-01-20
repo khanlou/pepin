@@ -1,0 +1,51 @@
+body {
+  font-family: 'Lora', sans-serif;
+  color: #333;
+}
+
+.recipe {
+  margin: 1em;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 0.4em;
+}
+
+h2 {
+  font-size: 1.4em;
+  margin-bottom: 0.4em;
+}
+
+.recipe-description {
+  font-style: italic;
+  margin-bottom: 0.5em;
+}
+
+a {
+  text-decoration: none;
+  color: #666;
+  font-style: italic;
+}
+
+.recipe-source-link {
+  margin-bottom: 0.5em;
+}
+
+.recipe-metadata {
+  border-top: thin solid #ccc;
+  border-bottom: thin solid #ccc;
+  overflow: auto;
+  margin-bottom: 0.5em;
+}
+
+.recipe-metadata div {
+  float: left;
+  padding: .4em;
+  margin: .4em 0;
+  border-right: thin solid #ccc;
+}
+
+.recipe-metadata div:last-child {
+  border: none;
+}

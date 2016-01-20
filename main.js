@@ -11,7 +11,7 @@ var IngredientBinder = function(lineItemNode) {
 };
 
 var ingredientsElement = document.getElementById('ingredients');
-var ingredientLineItems = ingredients.children[0].children;
+var ingredientLineItems = ingredients.children[1].children;
 
 var ingredientBinders = [];
 for (var i = 0; i < ingredientLineItems.length; i++) {

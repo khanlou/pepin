@@ -51,7 +51,13 @@ var AmountPresenter = function(unreducedAmount) {
   this.quantity = this.amount.quantity;
   this.unit = this.amount.unit;
   
+  this.epsilon = 0.0001;
+  
   this.amounts = function() {
+    if (this.quantity < this.epsilon) {
+      return [];
+    }
+    
     if (this.unit.isWhole) {
       return [this.amount];
     }
@@ -61,16 +67,12 @@ var AmountPresenter = function(unreducedAmount) {
       return [this.amount];
     }
     
-    var integerMultipleOfSmallestAcceptableUnit = Math.floor(multipleOfSmallestAcceptableUnit+0.001);
+    var integerMultipleOfSmallestAcceptableUnit = Math.floor(multipleOfSmallestAcceptableUnit + this.epsilon);
     var acceptableQuantityInCurrentUnit = integerMultipleOfSmallestAcceptableUnit * this.unit.smallestMeasure;
     var remainderForUseInSmallerUnit = this.quantity - acceptableQuantityInCurrentUnit;
-    if (remainderForUseInSmallerUnit < 0.00001) {
-      return [new Amount(acceptableQuantityInCurrentUnit, this.unit)]
-    }
     var amountRemaining = new Amount(remainderForUseInSmallerUnit, this.unit);
 
-    return [new Amount(acceptableQuantityInCurrentUnit, this.unit)]
-      .concat(new AmountPresenter(amountRemaining).amounts);
+    return [new Amount(acceptableQuantityInCurrentUnit, this.unit)].concat(new AmountPresenter(amountRemaining).amounts);
   }.bind(this)();
   
   this.amountForDisplay = this.amounts
@@ -1060,7 +1062,7 @@ var IngredientBinder = function(lineItemNode) {
 };
 
 var ingredientsElement = document.getElementById('ingredients');
-var ingredientLineItems = ingredients.children[0].children;
+var ingredientLineItems = ingredients.children[1].children;
 
 var ingredientBinders = [];
 for (var i = 0; i < ingredientLineItems.length; i++) {

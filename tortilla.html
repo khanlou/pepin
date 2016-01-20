@@ -1,11 +1,23 @@
 <html>
   <head>
     <title>Tortillas</title>
+    <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
     <link rel='stylesheet' type='text/css' href='tangle_kit.css'>
+    <link rel='stylesheet' type='text/css' href='reset.css'>
+    <link rel='stylesheet' type='text/css' href='styles.css'>
   </head>
   <body>
-    <div id='recipe'>
-      <div id="ingredients">
+    <div class='recipe'>
+      <h1 class='recipe-name'>Tortillas</h1>
+      <div class='recipe-description'>These flour tortillas are simple to make, chewy, and delicious.</div>
+      <div class='recipe-source-link'><a href='http://www.seriouseats.com/recipes/2015/04/thin-tender-flour-tortillas-recipe.html'>Source</a></div>
+      <div class='recipe-metadata'>
+        <div class='scaling-component' id='scaler'>Scale: <span class='TKAdjustableNumber' data-var='scalingFactor' data-max='20'></span></div>
+        <div class='serving-amount-component'>Serves: 4</div>
+        <div class='prep-time-component'>Prep Time: 20 min</div>
+      </div>
+      <div class="ingredients" id="ingredients">
+        <h2>Ingredients</h2>
         <ul>
           <li>2 cups all-purpose flour</li>
           <li>1 teaspoon of kosher salt</li>
@@ -13,7 +25,8 @@
           <li>3/4 cups of cold water</ul>
         </ul>
       </div>
-      <div id="steps">
+      <div class="instructions" id="instructions">
+        <h2>Instrutions</h2>
         <ol>
           <li>Place flour and salt in the workbowl of a food processor fitted with a steel blade and pulse to combine.</li>
           <li>Add tallow and pulse until mixture resembles coarse crumbs. Add water and process until a cohesive dough forms.</li>
@@ -26,7 +39,6 @@
           <li>Serve immediately while still warm.</li>
         </ol>
       </div>
-      <div id='scaler'>Scale: <span class='TKAdjustableNumber' data-var='scalingFactor' data-max='100'></span></div>
     </div>
   </body>
   <script lang='text/javascript' src='mootools.js'></script>
