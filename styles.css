@@ -1,6 +1,7 @@
 body {
   font-family: 'Lora', sans-serif;
   color: #333;
+  line-height: 1.3;
 }
 
 .recipe {
@@ -29,14 +30,15 @@ a {
 }
 
 .recipe-source-link {
-  margin-bottom: 0.5em;
+  font-size: 0.9em;
+  margin-bottom: 1.2em;
 }
 
 .recipe-metadata {
   border-top: thin solid #ccc;
   border-bottom: thin solid #ccc;
   overflow: auto;
-  margin-bottom: 0.5em;
+  margin-bottom: 1.5em;
 }
 
 .recipe-metadata div {
@@ -48,4 +50,50 @@ a {
 
 .recipe-metadata div:last-child {
   border: none;
+}
+
+.ingredients li {
+  margin-bottom: 0.4em;
+  font-size: 1.2em;
+}
+
+.instructions li {
+  margin-bottom: 0.4em;
+  font-size: 1.2em;
+}
+
+@media (min-width: 800px) {
+  .ingredients {
+    float: left;
+    width: 33%;
+  }
+  
+  .instructions {
+    float: right;
+    width: 66%;
+  }
+}
+
+@media (min-width: 600px) {
+  .recipe-metadata {
+    position: absolute;
+    right: 0em;
+    top: 3em;
+  }
+  
+  .recipe-metadata div {
+    padding: .4em 1em;
+  }
+}
+
+@media (min-width: 1200px) {
+  .ingredients {
+    float: left;
+    width: 400px;
+  }
+  
+  .instructions {
+    float: right;
+/*    width: 8;*/
+  }
 }
