@@ -75,15 +75,19 @@ a {
 }
 
 @media (min-width: 600px) {
-  .recipe-metadata {
-    position: absolute;
-    right: 0em;
-    top: 3em;
-  }
-  
   .recipe-metadata div {
     padding: .4em 1em;
   }
+  
+  .recipe-description-metadata { 
+    display: block;
+  }
+  
+  .recipe-metadata {
+    margin-to: 10px;
+    margin-left: 0; 
+  }
+  
 }
 
 @media (min-width: 1200px) {
@@ -94,6 +98,22 @@ a {
   
   .instructions {
     float: right;
-/*    width: 8;*/
+    width: 800px;
   }
 }
+
+.recipe-description-metadata {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.recipe-description {
+  flex: 1;
+}
+
+.recipe-metadata {
+  margin-left: 100px;
+  white-space: nowrap;
+}
+
