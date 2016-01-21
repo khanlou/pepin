@@ -22,6 +22,15 @@ describe("pattern", function() {
     assert.equal(ingredientLine.ingredient.name, 'flour');
   });
   
+  it("should parse mixed fractions", function() {
+    var ingredientLine = pattern.parse("1 3/4 cup of flour");
+    
+    assert.equal(ingredientLine.amount.quantity, 1.75);
+    assert.equal(ingredientLine.amount.unit.name, 'cup');
+    assert.equal(ingredientLine.ingredient.name, 'flour');
+  });
+  
+  
   it("should inject", function() {
     var injected = pattern.inject({
       "{quantity}": "bingo",

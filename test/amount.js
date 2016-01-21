@@ -48,6 +48,13 @@ describe("amount", function() {
     assert.equal(amount.quantity, 0.75);
     assert.equal(amount.unit.name, 'cup');
   });
+  
+  it("amounts should parse mixed fractions", function() {
+    var amount = new Amount('1 3/4', Unit.unitFromName('cup'));
+
+    assert.equal(amount.quantity, 1.75);
+    assert.equal(amount.unit.name, 'cup');
+  });
 
   it("amounts should parse decimals", function() {
     var amount = new Amount('0.25', Unit.unitFromName('cup'));

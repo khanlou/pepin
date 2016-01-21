@@ -6,6 +6,10 @@ var Amount = function(quantity, unit) {
     if (quantityAsString === "a" || quantityAsString === "an") {
       return 1;
     }
+    if (quantityAsString.includes('/') && /\s+/.test(quantityAsString)) {
+      var components = quantityAsString.split(/\s+/)
+      return components.map(this.parseQuantity).reduce(function(sum, current) { return sum + current }, 0);
+    }
     if (quantityAsString.includes('/')) {
       var numeratorAndDenominator = quantityAsString.split('/').map(function(part) {
         return parseInt(part);
@@ -13,7 +17,7 @@ var Amount = function(quantity, unit) {
       return numeratorAndDenominator[0] / numeratorAndDenominator[1];
     }
     return parseFloat(quantityAsString)
-  }
+  }.bind(this);
   
   if (typeof quantity === 'string') {
     this.quantityAsString = quantity;
