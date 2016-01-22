@@ -1,43 +1,34 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var WholeUnit = require('./whole_unit');
+var QuantityParser = require('./quantity_parser');
 
 var Amount = function(quantity, unit) {
-  
-  this.parseQuantity = function(quantityAsString) {
-    if (quantityAsString === "a" || quantityAsString === "an") {
-      return 1;
-    }
-    if (quantityAsString.includes('/')) {
-      var numeratorAndDenominator = quantityAsString.split('/').map(function(part) {
-        return parseInt(part);
-      });
-      return numeratorAndDenominator[0] / numeratorAndDenominator[1];
-    }
-    return parseFloat(quantityAsString)
-  }
-  
+
+  this.parseQuantity = function(quantityAsString) {}.bind(this);
+
   if (typeof quantity === 'string') {
     this.quantityAsString = quantity;
-    this.quantity = this.parseQuantity(this.quantityAsString);
+    this.quantity = new QuantityParser(this.quantityAsString).quantity;
   } else {
     this.quantity = quantity;
   }
 
   this.unit = unit || new WholeUnit();
-  
+
   this.amountByScaling = function(scalingFactor) {
     return new Amount(this.quantity * scalingFactor, this.unit);
   }.bind(this);
-  
+
   this.isValid = this.unit.isValidQuantity(this.quantity);
-  
+
   this.toString = function() {
     return '' + this.quantity + ' ' + this.unit.name;
   }
 };
 
 module.exports = Amount;
-},{"./whole_unit":12}],2:[function(require,module,exports){
+
+},{"./quantity_parser":9,"./whole_unit":13}],2:[function(require,module,exports){
 var Amount = require('./amount');
 var UnitReducer = require('./unit_reducer');
 var QuantityPresenter = require('./quantity_presenter');
@@ -85,7 +76,7 @@ var AmountPresenter = function(unreducedAmount) {
 
 module.exports = AmountPresenter;
 
-},{"./amount":1,"./inflector":3,"./quantity_presenter":9,"./unit_reducer":11}],3:[function(require,module,exports){
+},{"./amount":1,"./inflector":3,"./quantity_presenter":10,"./unit_reducer":12}],3:[function(require,module,exports){
 var Inflector = function() {
   
   var self = this;
@@ -568,7 +559,7 @@ var IngredientLinePresenter = function(pattern, ingredientLine) {
 
 module.exports = IngredientLinePresenter;
 
-},{"./amount_presenter":2,"./inflector":3,"./unit_reducer":11}],6:[function(require,module,exports){
+},{"./amount_presenter":2,"./inflector":3,"./unit_reducer":12}],6:[function(require,module,exports){
 var Pattern = require('./pattern');
 var IngredientLinePresenter = require('./ingredient_line_presenter');
 
@@ -592,6 +583,7 @@ module.exports = IngredientParser;
 var Unit = require('./unit');
 var IngredientLine = require('./ingredient_line');
 var Amount = require('./amount');
+var QuantityParser = require('./quantity_parser');
 
 var allUnitRegex = '(' + Unit.allUnitNames().map(function(unitName) {
   return '\\b' + unitName + '\\b'
@@ -600,17 +592,7 @@ var allUnitRegex = '(' + Unit.allUnitNames().map(function(unitName) {
 var Pattern = function(template) {
   this.template = template;
 
-  this.quantityRegexes = [
-    '\\ba\\b', //the word a
-    '\\ban\\b', //the word an
-    '\\d+/\\d+', //any fraction
-    '\\d*\\.\\d+', //any decimal
-    '\\d+' //any number
-    //whole word numbers
-    //ranges
-  ];
-
-  this.quantityRegex = '(' + this.quantityRegexes.join('|') + ')';
+  this.quantityRegex = '(' + QuantityParser.quantityRegexes.join('|') + ')';
   this.ingredientRegex = '(.+)';
   this.allUnitRegex = allUnitRegex;
 
@@ -670,7 +652,7 @@ Pattern.allPatterns = [
 
 module.exports = Pattern;
 
-},{"./amount":1,"./ingredient_line":4,"./unit":10}],8:[function(require,module,exports){
+},{"./amount":1,"./ingredient_line":4,"./quantity_parser":9,"./unit":11}],8:[function(require,module,exports){
 if (!Array.prototype.find) {
   Array.prototype.find = function(predicate) {
     if (this === null) {
@@ -708,6 +690,43 @@ if (!Number.isInteger) {
 }
 
 },{}],9:[function(require,module,exports){
+var QuantityParser = function(quantityAsString) {
+  if (quantityAsString === "a" || quantityAsString === "an") {
+    this.quantity = 1;
+  } else if (quantityAsString.includes('/') && /\s+/.test(quantityAsString)) {
+    var components = quantityAsString.split(/\s+/)
+    this.quantity = components
+      .map(function(component) {
+        return new QuantityParser(component).quantity;
+      })
+      .reduce(function(sum, current) {
+        return sum + current
+      }, 0);
+  } else if (quantityAsString.includes('/')) {
+    var numeratorAndDenominator = quantityAsString.split('/').map(function(part) {
+      return parseInt(part);
+    });
+    this.quantity = numeratorAndDenominator[0] / numeratorAndDenominator[1];
+  } else {
+    this.quantity = parseFloat(quantityAsString)
+  }
+};
+
+QuantityParser.quantityRegexes = [
+  '\\ba\\b', //the word a
+  '\\ban\\b', //the word an
+  '\\d+/\\d+', //any fraction
+  '\\d*\\.\\d+', //any decimal
+  '\\d+', //any number
+  '\\d+\\s+\\d+/\\d+' //1 3/4
+  //whole word numbers
+  //ranges
+];
+
+
+module.exports = QuantityParser;
+
+},{}],10:[function(require,module,exports){
 
 var QuantityPresenter = function(quantity) {
   this.quantity = quantity;
@@ -751,7 +770,7 @@ var QuantityPresenter = function(quantity) {
 };
 
 module.exports = QuantityPresenter;
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 var polyfills = require('./polyfills');
 
 var Inflector = require('./inflector');
@@ -936,7 +955,7 @@ Unit.allUnitNames = function() {
 };
 
 module.exports = Unit;
-},{"./inflector":3,"./polyfills":8}],11:[function(require,module,exports){
+},{"./inflector":3,"./polyfills":8}],12:[function(require,module,exports){
 var Unit = require('./unit');
 var Amount = require('./amount');
 
@@ -1035,7 +1054,7 @@ var UnitReducer = function(amount) {
 
 module.exports = UnitReducer;
 
-},{"./amount":1,"./unit":10}],12:[function(require,module,exports){
+},{"./amount":1,"./unit":11}],13:[function(require,module,exports){
 var WholeUnit = function() {
   this.name = '';
   this.alternateNames = []
@@ -1048,14 +1067,15 @@ var WholeUnit = function() {
 };
 
 module.exports = WholeUnit;
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 var IngredientParser = require('./domain/parser');
+var Scrubbing2 = require('./scrubbing')
 
 var IngredientBinder = function(lineItemNode) {
   this.lineItemNode = lineItemNode;
   this.textNode = lineItemNode.firstChild
   this.parser = new IngredientParser(this.textNode.textContent);
-  
+
   this.scale = function(scalingFactor) {
     this.textNode.textContent = this.parser.scale(scalingFactor);
   }.bind(this);
@@ -1070,13 +1090,346 @@ for (var i = 0; i < ingredientLineItems.length; i++) {
   ingredientBinders.push(new IngredientBinder(ingredientLineItem));
 }
 
-var tangle = new Tangle(document.getElementById('scaler'), {
-  initialize: function() { this.scalingFactor = 1; },
-  update: function() {
-    ingredientBinders.forEach(function(ingredientBinder) {
-      ingredientBinder.scale(this.scalingFactor);
-    }.bind(this))
+var scaleAllIngredientBinders = function(scalingFactor) {
+  ingredientBinders.forEach(function(ingredientBinder) {
+    ingredientBinder.scale(scalingFactor);
+  });
+};
+
+scaleAllIngredientBinders(1)
+
+var scalingAdapter = {
+  init: function(element) {
+    element.node.dataset.value = 1
   },
+  start: function(element) {
+    return parseInt(element.node.dataset.value, 10);
+  },
+  change: function(element, value) {
+    element.node.textContent = value;
+    scaleAllIngredientBinders(value);
+  },
+  end: function() {}
+};
+
+new Scrubbing(document.querySelector('#scaler'), {
+  resolver: Scrubbing.resolver.HorizontalProvider(20),
+  adapter: scalingAdapter
 });
 
-},{"./domain/parser":6}]},{},[13]);
+},{"./domain/parser":6,"./scrubbing":15}],15:[function(require,module,exports){
+(function (window, undefined){
+
+var resolveStrToObj = function ( objOrStr, searchObj ) {
+  if ( ! objOrStr ) return;
+
+  // If `objOrStr` is a String search for it in the `searchObj`
+  if ( typeof objOrStr === "string") {
+    return searchObj[objOrStr];
+  }
+
+  return objOrStr;
+},
+
+fillOption = function ( newOptions, userOption, defaultOptions, searchObj, optionName ) {
+  if ( ! userOption ) {
+    // No userOptions, use defaults
+    newOptions[optionName] = defaultOptions[optionName];
+  } else {
+    // User Options are there.
+    // Search for the `optionName` and resolve it.
+    newOptions[optionName] = resolveStrToObj ( userOption[optionName], searchObj ) || defaultOptions[optionName];
+  }
+},
+
+callObjOrArray = function ( objOrArr, methodName, p1, p2, p3 ){
+  if ( Array.isArray ( objOrArr ) ) {
+    objOrArr.forEach(function ( obj ){
+      obj[methodName] ( p1, p2, p3 );
+    });
+  } else { 
+    objOrArr[methodName] ( p1, p2, p3 );
+  }
+
+};
+
+// Adapter are used to bridge between the scrubbing Element and the DOM
+
+
+// The BasicNode Adapter comes bundled and allows the scrubbing to work
+// on DOM elements, reading the starting value from DOM and writing it back on change.
+var BasicNodeAdapter = {
+
+
+  // Called everytime a new `scrubbingElement` was created.
+  init : function ( scrubbingElement ) {},
+
+
+  // Called before the scrubbing starts.
+  //
+  // Return the inital value for scrubbing
+  start : function ( scrubbingElement ){
+    return parseInt ( scrubbingElement.node.textContent, 10 );
+  },
+
+
+  // Called if the `value` for the `scrubbingElement` has changed.
+  // Where `value` is the value calculated from `start` and
+  // the Resolver which is used.
+  change : function ( scrubbingElement, value ) {
+    scrubbingElement.node.textContent = value;
+  },
+
+  //  Called when the scrubbing ends.
+  end : function ( scrubbingElement ) { }
+};
+
+// Resolver are used to calculate the coordinates and scrubbing value
+
+// The BasicResolver is used to construct the `HorizontalResolver` and the `VerticalResolver`
+// Which are bundled with Scrubbing.js
+var BasicResolver = function ( name, prop, factor, divider ){
+  this.name    = name;
+  this.prop    = prop;
+  this.factor  = factor  || 1;
+  this.divider = divider || 1;
+};
+
+BasicResolver.prototype = {
+
+   //  Used to determin the `startCoordinate` and `currentCoordinate`
+   //
+   //   e : MouseEvent/TouchEvent/Event
+   //
+   //  return Coordinate
+  coordinate : function ( e ) {
+    return e[this.prop];
+  },
+
+
+   //  Calculate the diffrence between the `startCoordinate` and the `currentCoordinate`
+   //
+   //  return Value used to calculate the new numeric value
+  value : function ( startCoordinate, currentCoordinate ){
+    return this.factor * Math.floor ( ( currentCoordinate - startCoordinate ) / this.divider );
+  }
+};
+
+// This function creates provider for different BasicResolver
+// It is used to create the bundled `HorizontalResolver` and `VerticalResolver`
+//
+// Return function which takes a `divider` to determin the "friction" of the Scrubbing
+var CreateBasicResolverProvider = function ( name, prop, factor ) {
+  return function ( divider ) {
+    return new BasicResolver ( name, prop, factor, divider );
+  };
+};
+
+
+// Create Horizontal/Vertical Resolver
+var HorizontalResolverProvider = CreateBasicResolverProvider ( 'Horizontal', 'clientX' ),
+    VerticalResolverProvider   = CreateBasicResolverProvider ( 'Vertical'  , 'clientY', -1 );
+
+
+// A driver defines the input method used to scrub values.
+// The default mouse driver uses a combination of `mousedown`, `mouseup` and `mousemove`
+// events to calucalte a new Value. This is done by using an `Adapter` to retrive values from the
+// DOM and reflect new values back in the DOM. A `resolver` is used to calculate the changed values.
+
+var MouseDriver = (function (){
+
+  var globalMouseMoveListener, // Holds the current MouseMoveListener
+      currentElement,          // Holds the current Element
+
+      globalMouseUpListener = function (  ) {
+        this.removeEventListener('mousemove', globalMouseMoveListener, false);
+
+        if ( !!currentElement )
+            currentElement.options.adapter.end ( currentElement );
+
+      },
+
+      globalMouseDownListener = function ( e ) {
+        if ( !! e.target.scrubbingElement ) {
+            e.preventDefault();
+
+            currentElement = e.target.scrubbingElement;
+
+            var startValue          = currentElement.options.adapter.start ( currentElement ),
+                coordinateResolver  = function ( e ) { return currentElement.options.resolver.coordinate( e ); },
+                startCoordinate     = coordinateResolver( e );
+
+
+            globalMouseMoveListener = function  ( e ) {
+              if ( e.which === 1 ) {
+                var delta = currentElement.options.resolver.value ( startCoordinate, coordinateResolver ( e ) );
+                            currentElement.options.adapter.change ( currentElement, startValue +  delta, delta );
+              } else { 
+                globalMouseUpListener ();
+              }
+            };
+
+            window.addEventListener('mousemove', globalMouseMoveListener, false);
+            window.addEventListener('mouseup',   globalMouseUpListener, false);
+
+            return true;
+          }
+      },
+
+      init_once = function (){
+        window.addEventListener('mousedown', globalMouseDownListener, false);
+        init_once = function (){}; // NOOP Function that will be called subsequential
+      };
+
+  return {
+
+      init : function ( scrubbingElement ) {
+        init_once ();
+      },
+
+      remove : function ( scrubbingElement ) { }
+  };
+})();
+
+var TouchDriver = (function(window, undefined){
+  var currentElement,
+      globalTouchMoveListener,
+      globalTouchEndListener = function ( e ) {
+        window.removeEventListener ( 'touchmove', globalTouchMoveListener, false );
+        if (!! currentElement ) {
+          currentElement.options.adapter.end ( currentElement );
+        }
+      },
+      touchstartListener = function ( e ){
+        if ( e.targetTouches.length !== 1) return;
+        var touchEvent = e.targetTouches[0];
+
+        if ( !! touchEvent.target.scrubbingElement ) {
+          e.preventDefault();
+
+          currentElement = touchEvent.target.scrubbingElement;
+
+          var startValue          = currentElement.options.adapter.start ( currentElement ),
+              coordinateResolver  = function ( e ) { return currentElement.options.resolver.coordinate( e ); },
+              startCoordinate     = coordinateResolver( touchEvent );
+
+          globalTouchMoveListener = function ( e ) { 
+            if ( e.targetTouches.length !== 1) return;
+            e.preventDefault();
+            var delta = currentElement.options.resolver.value ( startCoordinate, coordinateResolver ( e.targetTouches[0] ) );
+            currentElement.options.adapter.change ( currentElement, startValue +  delta, delta );
+          };
+
+          window.addEventListener ( 'touchmove', globalTouchMoveListener, false );
+        }
+      },
+
+      init_once = function ( ) {
+        window.addEventListener ( 'touchcancel', globalTouchEndListener, false );
+        window.addEventListener ( 'touchend', globalTouchEndListener, false );
+        init_once = function ( ) { };
+      };
+
+
+  return {
+    init : function ( scrubbingElement ) {
+      init_once ();
+      scrubbingElement.node.addEventListener ( 'touchstart', touchstartListener, false );
+    },
+
+    remove : function ( scrubbingElement ) { } 
+  };
+})(window, undefined);
+
+var MouseWheelDriver = (function(window, undefined){
+
+  return {
+    init : function ( scrubbingElement ) {
+
+      scrubbingElement.node.addEventListener("mousewheel", function ( e ) {
+        e.preventDefault();
+        var startValue          = scrubbingElement.options.adapter.start ( scrubbingElement );
+        scrubbingElement.options.adapter.change ( scrubbingElement, startValue - e.wheelDelta, e.wheelDelta );
+      }, false);
+
+    },
+
+    remove : function ( scrubbingElement ) { }
+  };
+
+})(window);
+
+// Defining some defaults
+var defaultOptions = {
+  driver      : [ TouchDriver, MouseDriver ],
+  resolver    : HorizontalResolverProvider ( ),
+  adapter     : BasicNodeAdapter
+};
+
+
+//  Base Object
+//
+//  Used to create a Scrubbing
+//
+//      `node` : Scrubbing will be bound to this element
+//      `userOptions` : [optional] Here you can pass some Options
+//
+var Scrubbing = function ( node, userOptions ) {
+
+  // Make `new` optional
+  if ( !( this instanceof Scrubbing )){
+    return new Scrubbing ( userOptions );
+  }
+  // Save DOM node
+  this.node        =  node;
+
+  // Add Options
+  this.options     = {};
+
+  fillOption ( this.options, userOptions, defaultOptions, Scrubbing.driver,   "driver");
+  fillOption ( this.options, userOptions, defaultOptions, Scrubbing.resolver, "resolver");
+  fillOption ( this.options, userOptions, defaultOptions, Scrubbing.adapter,  "adapter");
+
+
+  this.node.dataset.scrubOrientation = this.options.resolver.name;
+
+  // Add Scrubbing element to node
+  node.scrubbingElement = this;
+
+  // Initialise Adapter
+  this.options.adapter.init ( this );
+  // Initialise Driver
+  callObjOrArray ( this.options.driver, "init", this);
+};
+
+Scrubbing.prototype = {
+    remove   : function (){
+      delete node.scrubbingElement;
+      callObjOrArray ( this.options.driver, "remove", this);
+    }
+};
+
+
+  Scrubbing.driver   = {
+                        Mouse     : MouseDriver,
+                        MouseWheel: MouseWheelDriver,
+
+                        Touch     : TouchDriver
+                       };
+
+  Scrubbing.adapter  = { BasicNode : BasicNodeAdapter };
+
+  Scrubbing.resolver = {
+                        DefaultHorizontal  : HorizontalResolverProvider (),
+                        DefaultVertical    : VerticalResolverProvider   (),
+
+                        HorizontalProvider : HorizontalResolverProvider,
+                        VerticalProvider   : VerticalResolverProvider
+                      };
+
+  window.Scrubbing = Scrubbing;
+})(window);
+
+
+module.exports = window.Scrubbing;
+},{}]},{},[14]);

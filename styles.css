@@ -52,6 +52,20 @@ a {
   border: none;
 }
 
+[data-scrub-orientation] {
+  border-bottom:1px dashed black; 
+}
+
+[data-scrub-orientation="Vertical"] {
+  cursor: row-resize;
+}
+
+[data-scrub-orientation="Horizontal"] {
+  cursor: col-resize;
+}
+
+
+
 .ingredients li {
   margin-bottom: 0.4em;
   font-size: 1.2em;
