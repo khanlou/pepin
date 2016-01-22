@@ -62,6 +62,21 @@ a {
   font-size: 1.2em;
 }
 
+.recipe-description-metadata {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.recipe-description {
+  flex: 1;
+}
+
+.recipe-metadata {
+  margin-left: 100px;
+  white-space: nowrap;
+}
+
 @media (min-width: 800px) {
   .ingredients {
     float: left;
@@ -89,21 +104,6 @@ a {
   .instructions {
     float: left;
   }
-}
-
-.recipe-description-metadata {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-}
-
-.recipe-description {
-  flex: 1;
-}
-
-.recipe-metadata {
-  margin-left: 100px;
-  white-space: nowrap;
 }
 
 @media (max-width: 700px) {
