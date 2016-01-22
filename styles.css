@@ -70,7 +70,7 @@ a {
   
   .instructions {
     float: right;
-    width: 66%;
+    width: 65%;
   }
 }
 
@@ -87,8 +87,7 @@ a {
   }
   
   .instructions {
-    float: right;
-    width: 800px;
+    float: left;
   }
 }
 
