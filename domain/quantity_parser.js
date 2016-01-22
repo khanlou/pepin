@@ -20,4 +20,16 @@ var QuantityParser = function(quantityAsString) {
   }
 };
 
+QuantityParser.quantityRegexes = [
+  '\\ba\\b', //the word a
+  '\\ban\\b', //the word an
+  '\\d+/\\d+', //any fraction
+  '\\d*\\.\\d+', //any decimal
+  '\\d+', //any number
+  '\\d+\\s+\\d+/\\d+' //1 3/4
+  //whole word numbers
+  //ranges
+];
+
+
 module.exports = QuantityParser;

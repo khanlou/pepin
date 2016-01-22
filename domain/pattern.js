@@ -1,6 +1,7 @@
 var Unit = require('./unit');
 var IngredientLine = require('./ingredient_line');
 var Amount = require('./amount');
+var QuantityParser = require('./quantity_parser');
 
 var allUnitRegex = '(' + Unit.allUnitNames().map(function(unitName) {
   return '\\b' + unitName + '\\b'
@@ -9,18 +10,7 @@ var allUnitRegex = '(' + Unit.allUnitNames().map(function(unitName) {
 var Pattern = function(template) {
   this.template = template;
 
-  this.quantityRegexes = [
-    '\\ba\\b', //the word a
-    '\\ban\\b', //the word an
-    '\\d+/\\d+', //any fraction
-    '\\d*\\.\\d+', //any decimal
-    '\\d+', //any number
-    '\\d+\\s+\\d+/\\d+' //1 3/4
-    //whole word numbers
-    //ranges
-  ];
-
-  this.quantityRegex = '(' + this.quantityRegexes.join('|') + ')';
+  this.quantityRegex = '(' + QuantityParser.quantityRegexes.join('|') + ')';
   this.ingredientRegex = '(.+)';
   this.allUnitRegex = allUnitRegex;
 
