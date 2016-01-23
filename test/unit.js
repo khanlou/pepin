@@ -1,4 +1,4 @@
-var Unit = require('../domain/unit');
+var Unit = require('../assets/js/domain/unit');
 var assert = require('assert');
 
 describe("unit", function() {

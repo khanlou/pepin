@@ -1,6 +1,6 @@
-var Unit = require('../domain/unit');
-var IngredientLine = require('../domain/ingredient_line');
-var Amount = require('../domain/amount');
+var Unit = require('../assets/js/domain/unit');
+var IngredientLine = require('../assets/js/domain/ingredient_line');
+var Amount = require('../assets/js/domain/amount');
 var assert = require('assert');
 
 describe("ingredient line", function() {

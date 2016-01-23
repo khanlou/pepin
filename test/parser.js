@@ -1,4 +1,4 @@
-var IngredientParser = require('../domain/parser');
+var IngredientParser = require('../assets/js/domain/parser');
 var assert = require('assert');
 
 describe("parser", function() {

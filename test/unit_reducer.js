@@ -1,6 +1,6 @@
-var UnitReducer = require('../domain/unit_reducer');
-var Amount = require('../domain/amount');
-var Unit = require('../domain/unit');
+var UnitReducer = require('../assets/js/domain/unit_reducer');
+var Amount = require('../assets/js/domain/amount');
+var Unit = require('../assets/js/domain/unit');
 var assert = require('assert');
 
 describe("unit reducer", function() {

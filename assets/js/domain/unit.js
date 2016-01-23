@@ -1,6 +1,6 @@
-var polyfills = require('./polyfills');
+var polyfills = require('../polyfills');
 
-var Inflector = require('./inflector');
+var Inflector = require('../inflector');
 
 var inflector = new Inflector();
 

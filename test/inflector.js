@@ -1,4 +1,4 @@
-var Inflector = require('../domain/inflector');
+var Inflector = require('../assets/js/inflector');
 var assert = require('assert');
 
 describe("inflector", function() {

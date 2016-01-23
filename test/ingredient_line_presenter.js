@@ -1,8 +1,8 @@
-var IngredientLinePresenter = require('../domain/ingredient_line_presenter');
-var Pattern = require('../domain/pattern');
-var IngredientLine = require('../domain/ingredient_line');
-var Amount = require('../domain/amount');
-var Unit = require('../domain/unit');
+var IngredientLinePresenter = require('../assets/js/domain/ingredient_line_presenter');
+var Pattern = require('../assets/js/domain/pattern');
+var IngredientLine = require('../assets/js/domain/ingredient_line');
+var Amount = require('../assets/js/domain/amount');
+var Unit = require('../assets/js/domain/unit');
 var assert = require('assert');
 
 describe("ingredient line presenter", function() {

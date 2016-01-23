@@ -1,7 +1,7 @@
-var AmountPresenter = require('../domain/amount_presenter');
-var Amount = require('../domain/amount');
-var UnitReducer = require('../domain/unit_reducer');
-var Unit = require('../domain/unit');
+var AmountPresenter = require('../assets/js/domain/amount_presenter');
+var Amount = require('../assets/js/domain/amount');
+var UnitReducer = require('../assets/js/domain/unit_reducer');
+var Unit = require('../assets/js/domain/unit');
 var assert = require('assert');
 
 describe("amount presenter", function() {

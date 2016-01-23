@@ -1,5 +1,5 @@
-var Unit = require('../domain/unit');
-var Amount = require('../domain/amount');
+var Unit = require('../assets/js/domain/unit');
+var Amount = require('../assets/js/domain/amount');
 var assert = require('assert');
 
 describe("amount", function() {

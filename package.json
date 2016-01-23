@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "test": "mocha",
-    "build": "browserify main.js -o bundle.js"
+    "build": "browserify assets/js/index.js -o assets/js/bundle.js"
   },
   "devDependencies": {
     "mocha": "^2.3.4",

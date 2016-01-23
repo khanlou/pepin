@@ -2,7 +2,7 @@ var Amount = require('./amount');
 var UnitReducer = require('./unit_reducer');
 var QuantityPresenter = require('./quantity_presenter');
 
-var Inflector = require('./inflector');
+var Inflector = require('../inflector');
 var inflector = new Inflector();
 
 var AmountPresenter = function(unreducedAmount) {

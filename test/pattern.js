@@ -1,4 +1,4 @@
-var Pattern = require('../domain/pattern');
+var Pattern = require('../assets/js/domain/pattern');
 var assert = require('assert');
 
 describe("pattern", function() {
