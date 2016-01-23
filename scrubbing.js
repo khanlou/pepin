@@ -1,3 +1,4 @@
+var Scrubbing
 (function (window, undefined){
 
 var resolveStrToObj = function ( objOrStr, searchObj ) {
@@ -307,8 +308,8 @@ Scrubbing.prototype = {
                         VerticalProvider   : VerticalResolverProvider
                       };
 
-  window.Scrubbing = Scrubbing;
+module.exports = Scrubbing;
+
 })(window);
 
 
-module.exports = window.Scrubbing;

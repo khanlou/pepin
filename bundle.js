@@ -1069,7 +1069,7 @@ var WholeUnit = function() {
 module.exports = WholeUnit;
 },{}],14:[function(require,module,exports){
 var IngredientParser = require('./domain/parser');
-var Scrubbing2 = require('./scrubbing')
+var Scrubbing = require('./scrubbing');
 
 var IngredientBinder = function(lineItemNode) {
   this.lineItemNode = lineItemNode;
@@ -1082,7 +1082,7 @@ var IngredientBinder = function(lineItemNode) {
 };
 
 var ingredientsElement = document.getElementById('ingredients');
-var ingredientLineItems = ingredients.children[1].children;
+var ingredientLineItems = ingredients.children;
 
 var ingredientBinders = [];
 for (var i = 0; i < ingredientLineItems.length; i++) {
@@ -1109,7 +1109,7 @@ var scalingAdapter = {
     element.node.textContent = value;
     scaleAllIngredientBinders(value);
   },
-  end: function() {}
+  end: function() { }
 };
 
 new Scrubbing(document.querySelector('#scaler'), {
@@ -1118,6 +1118,7 @@ new Scrubbing(document.querySelector('#scaler'), {
 });
 
 },{"./domain/parser":6,"./scrubbing":15}],15:[function(require,module,exports){
+var Scrubbing
 (function (window, undefined){
 
 var resolveStrToObj = function ( objOrStr, searchObj ) {
@@ -1427,9 +1428,10 @@ Scrubbing.prototype = {
                         VerticalProvider   : VerticalResolverProvider
                       };
 
-  window.Scrubbing = Scrubbing;
+module.exports = Scrubbing;
+
 })(window);
 
 
-module.exports = window.Scrubbing;
+
 },{}]},{},[14]);
