@@ -33,3 +33,9 @@ if (!Number.isInteger) {
     return typeof nVal === "number" && isFinite(nVal) && nVal > -9007199254740992 && nVal < 9007199254740992 && (Math.floor(nVal) - nVal < 0.001);
   };
 }
+
+if (!Number.prototype.clamp) {
+  Number.prototype.clamp = function(min, max) {
+    return Math.min(Math.max(this, min), max);
+  };
+}

@@ -23,6 +23,7 @@ scaleAllBinders(1)
 
 var scalingAdapter = {
   _normalize: function(value) {
+    value = value.clamp(-4, 10)
     if (value <= 0) {
       value = value - 2;
       value = Math.abs(value);

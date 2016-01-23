@@ -612,6 +612,7 @@ scaleAllBinders(1)
 
 var scalingAdapter = {
   _normalize: function(value) {
+    value = value.clamp(-4, 10)
     if (value <= 0) {
       value = value - 2;
       value = Math.abs(value);
@@ -1130,6 +1131,12 @@ if (!String.prototype.includes) {
 if (!Number.isInteger) {
   Number.isInteger = function isInteger (nVal) {
     return typeof nVal === "number" && isFinite(nVal) && nVal > -9007199254740992 && nVal < 9007199254740992 && (Math.floor(nVal) - nVal < 0.001);
+  };
+}
+
+if (!Number.prototype.clamp) {
+  Number.prototype.clamp = function(min, max) {
+    return Math.min(Math.max(this, min), max);
   };
 }
 
