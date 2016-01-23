@@ -588,22 +588,25 @@ var WholeUnit = function() {
 module.exports = WholeUnit;
 },{}],12:[function(require,module,exports){
 var IngredientBinder = require('./ingredient_binder');
+var ServingBinder = require('./serving_binder');
 var Scrubbing = require('./scrubbing');
 
 var ingredientLineItems = document.getElementById('ingredients').children;
 
 
-var ingredientBinders = [];
+var scalableBinders = [];
 for (var i = 0; i < ingredientLineItems.length; i++) {
   var ingredientLineItem = ingredientLineItems[i];
-  ingredientBinders.push(new IngredientBinder(ingredientLineItem));
+  scalableBinders.push(new IngredientBinder(ingredientLineItem));
 }
+scalableBinders.push(new ServingBinder(document.getElementById('serving-amount')));
 
 var scaleAllIngredientBinders = function(scalingFactor) {
-  ingredientBinders.forEach(function(ingredientBinder) {
-    ingredientBinder.scale(scalingFactor);
+  scalableBinders.forEach(function(binder) {
+    binder.scale(scalingFactor);
   });
 };
+
 
 scaleAllIngredientBinders(1)
 
@@ -626,7 +629,7 @@ new Scrubbing(document.querySelector('#scaler'), {
   adapter: scalingAdapter
 });
 
-},{"./ingredient_binder":14,"./scrubbing":16}],13:[function(require,module,exports){
+},{"./ingredient_binder":14,"./scrubbing":16,"./serving_binder":17}],13:[function(require,module,exports){
 var Inflector = function() {
   
   var self = this;
@@ -1438,4 +1441,16 @@ module.exports = Scrubbing;
 
 
 
+},{}],17:[function(require,module,exports){
+var ServingBinder = function(scalingNode) {
+  this.scalingNode = scalingNode;
+  this.textNode = this.scalingNode.firstChild
+  this.value = parseInt(this.textNode.textContent)
+
+  this.scale = function(scalingFactor) {
+    this.textNode.textContent = '' + this.value * scalingFactor
+  }.bind(this);
+};
+
+module.exports = ServingBinder;
 },{}]},{},[12]);

@@ -1,20 +1,23 @@
 var IngredientBinder = require('./ingredient_binder');
+var ServingBinder = require('./serving_binder');
 var Scrubbing = require('./scrubbing');
 
 var ingredientLineItems = document.getElementById('ingredients').children;
 
 
-var ingredientBinders = [];
+var scalableBinders = [];
 for (var i = 0; i < ingredientLineItems.length; i++) {
   var ingredientLineItem = ingredientLineItems[i];
-  ingredientBinders.push(new IngredientBinder(ingredientLineItem));
+  scalableBinders.push(new IngredientBinder(ingredientLineItem));
 }
+scalableBinders.push(new ServingBinder(document.getElementById('serving-amount')));
 
 var scaleAllIngredientBinders = function(scalingFactor) {
-  ingredientBinders.forEach(function(ingredientBinder) {
-    ingredientBinder.scale(scalingFactor);
+  scalableBinders.forEach(function(binder) {
+    binder.scale(scalingFactor);
   });
 };
+
 
 scaleAllIngredientBinders(1)
 
