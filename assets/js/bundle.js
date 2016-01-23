@@ -474,7 +474,7 @@ Unit.allUnitNames = function() {
 };
 
 module.exports = Unit;
-},{"../inflector":13,"../polyfills":14}],10:[function(require,module,exports){
+},{"../inflector":13,"../polyfills":15}],10:[function(require,module,exports){
 var Unit = require('./unit');
 var Amount = require('./amount');
 
@@ -587,21 +587,11 @@ var WholeUnit = function() {
 
 module.exports = WholeUnit;
 },{}],12:[function(require,module,exports){
-var IngredientParser = require('./domain/parser');
+var IngredientBinder = require('./ingredient_binder');
 var Scrubbing = require('./scrubbing');
 
-var IngredientBinder = function(lineItemNode) {
-  this.lineItemNode = lineItemNode;
-  this.textNode = lineItemNode.firstChild
-  this.parser = new IngredientParser(this.textNode.textContent);
+var ingredientLineItems = document.getElementById('ingredients').children;
 
-  this.scale = function(scalingFactor) {
-    this.textNode.textContent = this.parser.scale(scalingFactor);
-  }.bind(this);
-};
-
-var ingredientsElement = document.getElementById('ingredients');
-var ingredientLineItems = ingredients.children;
 
 var ingredientBinders = [];
 for (var i = 0; i < ingredientLineItems.length; i++) {
@@ -636,7 +626,7 @@ new Scrubbing(document.querySelector('#scaler'), {
   adapter: scalingAdapter
 });
 
-},{"./domain/parser":5,"./scrubbing":15}],13:[function(require,module,exports){
+},{"./ingredient_binder":14,"./scrubbing":16}],13:[function(require,module,exports){
 var Inflector = function() {
   
   var self = this;
@@ -1081,6 +1071,20 @@ var Inflector = function() {
 
 module.exports = Inflector;
 },{}],14:[function(require,module,exports){
+var IngredientParser = require('./domain/parser');
+
+var IngredientBinder = function(lineItemNode) {
+  this.lineItemNode = lineItemNode;
+  this.textNode = lineItemNode.firstChild
+  this.parser = new IngredientParser(this.textNode.textContent);
+
+  this.scale = function(scalingFactor) {
+    this.textNode.textContent = this.parser.scale(scalingFactor);
+  }.bind(this);
+};
+
+module.exports = IngredientBinder;
+},{"./domain/parser":5}],15:[function(require,module,exports){
 if (!Array.prototype.find) {
   Array.prototype.find = function(predicate) {
     if (this === null) {
@@ -1117,7 +1121,7 @@ if (!Number.isInteger) {
   };
 }
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 var Scrubbing
 (function (window, undefined){
 

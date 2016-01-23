@@ -1,18 +1,8 @@
-var IngredientParser = require('./domain/parser');
+var IngredientBinder = require('./ingredient_binder');
 var Scrubbing = require('./scrubbing');
 
-var IngredientBinder = function(lineItemNode) {
-  this.lineItemNode = lineItemNode;
-  this.textNode = lineItemNode.firstChild
-  this.parser = new IngredientParser(this.textNode.textContent);
+var ingredientLineItems = document.getElementById('ingredients').children;
 
-  this.scale = function(scalingFactor) {
-    this.textNode.textContent = this.parser.scale(scalingFactor);
-  }.bind(this);
-};
-
-var ingredientsElement = document.getElementById('ingredients');
-var ingredientLineItems = ingredients.children;
 
 var ingredientBinders = [];
 for (var i = 0; i < ingredientLineItems.length; i++) {
