@@ -5,7 +5,7 @@ body {
 }
 
 .recipe {
-  margin: 1em;
+  margin: 10px;
 }
 
 h1 {
@@ -92,15 +92,22 @@ a {
     margin-left: 100px;
     white-space: nowrap;
   }
-  
+
+  .content-wrapper {
+    display: flex;
+    align-items: stretch;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+    
   .ingredients {
-    float: left;
-    width: 33%;
+    min-width: 200px;
+    width: 200px;
+    margin-right: 50px;
   }
   
   .instructions {
-    float: right;
-    width: 65%;
+    
   }
 
   .recipe-description-metadata {
@@ -119,11 +126,17 @@ a {
     font-size: 150%;
   }
   .ingredients {
-    float: left;
+    min-width: 400px;
     width: 400px;
   }
   
   .instructions {
-    float: left;
+  }
+}
+
+@media (min-width: 1600px) {
+  .recipe {
+    width: 1600px;
+    margin: auto;
   }
 }
