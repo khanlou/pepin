@@ -12,14 +12,13 @@ for (var i = 0; i < ingredientLineItems.length; i++) {
 }
 scalableBinders.push(new ServingBinder(document.getElementById('serving-amount')));
 
-var scaleAllIngredientBinders = function(scalingFactor) {
+var scaleAllBinders = function(scalingFactor) {
   scalableBinders.forEach(function(binder) {
     binder.scale(scalingFactor);
   });
 };
 
-
-scaleAllIngredientBinders(1)
+scaleAllBinders(1)
 
 var scalingAdapter = {
   init: function(element) {
