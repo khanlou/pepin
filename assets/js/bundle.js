@@ -618,7 +618,7 @@ var scalingAdapter = {
   },
   change: function(element, value) {
     element.node.textContent = value;
-    scaleAllIngredientBinders(value);
+    scaleAllBinders(value);
   },
   end: function() { }
 };
