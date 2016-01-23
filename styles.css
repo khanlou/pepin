@@ -64,8 +64,6 @@ a {
   cursor: col-resize;
 }
 
-
-
 .ingredients li {
   margin-bottom: 0.4em;
   font-size: 1.2em;
@@ -104,9 +102,7 @@ a {
     float: right;
     width: 65%;
   }
-}
 
-@media (min-width: 600px) {
   .recipe-description-metadata {
     display: flex;
     align-items: flex-end;
@@ -119,6 +115,9 @@ a {
 }
 
 @media (min-width: 1200px) {
+  body {
+    font-size: 150%;
+  }
   .ingredients {
     float: left;
     width: 400px;
