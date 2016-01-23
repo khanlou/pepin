@@ -1,5 +1,6 @@
 var IngredientBinder = require('./ingredient_binder');
 var ServingBinder = require('./serving_binder');
+var QuantityPresenter = require('./domain/quantity_presenter');
 var Scrubbing = require('./scrubbing');
 
 var ingredientLineItems = document.getElementById('ingredients').children;
@@ -21,6 +22,14 @@ var scaleAllBinders = function(scalingFactor) {
 scaleAllBinders(1)
 
 var scalingAdapter = {
+  _normalize: function(value) {
+    if (value <= 0) {
+      value = value - 2;
+      value = Math.abs(value);
+      value = 1/value;
+    }
+    return value;
+  },
   init: function(element) {
     element.node.dataset.value = 1
   },
@@ -28,13 +37,14 @@ var scalingAdapter = {
     return parseInt(element.node.dataset.value, 10);
   },
   change: function(element, value) {
-    element.node.textContent = value;
-    scaleAllBinders(value);
+    var normalizedValue = this._normalize(value)
+    element.node.textContent = new QuantityPresenter(normalizedValue).quantityForDisplay;
+    scaleAllBinders(normalizedValue);
   },
   end: function() { }
 };
 
 new Scrubbing(document.querySelector('#scaler'), {
   resolver: Scrubbing.resolver.HorizontalProvider(20),
-  adapter: scalingAdapter
+  adapter: scalingAdapter,
 });

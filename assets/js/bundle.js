@@ -258,7 +258,7 @@ var QuantityPresenter = function(quantity) {
     0.25: "\u00BC",
     0.5: "\u00BD",
     0.75: "\u00BE",
-    0.142: "\u2150",
+    0.1428: "\u2150",
     0.111: "\u2151",
     0.1: "\u2152",
     0.333: "\u2153",
@@ -589,6 +589,7 @@ module.exports = WholeUnit;
 },{}],12:[function(require,module,exports){
 var IngredientBinder = require('./ingredient_binder');
 var ServingBinder = require('./serving_binder');
+var QuantityPresenter = require('./domain/quantity_presenter');
 var Scrubbing = require('./scrubbing');
 
 var ingredientLineItems = document.getElementById('ingredients').children;
@@ -610,6 +611,14 @@ var scaleAllBinders = function(scalingFactor) {
 scaleAllBinders(1)
 
 var scalingAdapter = {
+  _normalize: function(value) {
+    if (value <= 0) {
+      value = value - 2;
+      value = Math.abs(value);
+      value = 1/value;
+    }
+    return value;
+  },
   init: function(element) {
     element.node.dataset.value = 1
   },
@@ -617,18 +626,19 @@ var scalingAdapter = {
     return parseInt(element.node.dataset.value, 10);
   },
   change: function(element, value) {
-    element.node.textContent = value;
-    scaleAllBinders(value);
+    var normalizedValue = this._normalize(value)
+    element.node.textContent = new QuantityPresenter(normalizedValue).quantityForDisplay;
+    scaleAllBinders(normalizedValue);
   },
   end: function() { }
 };
 
 new Scrubbing(document.querySelector('#scaler'), {
   resolver: Scrubbing.resolver.HorizontalProvider(20),
-  adapter: scalingAdapter
+  adapter: scalingAdapter,
 });
 
-},{"./ingredient_binder":14,"./scrubbing":16,"./serving_binder":17}],13:[function(require,module,exports){
+},{"./domain/quantity_presenter":8,"./ingredient_binder":14,"./scrubbing":16,"./serving_binder":17}],13:[function(require,module,exports){
 var Inflector = function() {
   
   var self = this;
