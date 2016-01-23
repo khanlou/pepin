@@ -23,4 +23,14 @@ describe("inflector", function() {
     var string = inflector.pluralizeWithCount('cup', 1);
     assert.equal(string, 'cup');
   });
+  
+  it("shouldn't pluralize an already pluralized number", function() {
+    var string = inflector.pluralizeWithCount('cups', 2);
+    assert.equal(string, 'cups');
+  });
+  
+  it("shouldn't pluralize a number less than one", function() {
+    var string = inflector.pluralizeWithCount('cup', 0.25);
+    assert.equal(string, 'cup');
+  });
 });

@@ -143,7 +143,7 @@ var Inflector = function() {
    * @return {String}
    */
   function pluralize (word, count, inclusive) {
-    var pluralized = count === 1
+    var pluralized = count <= 1
       ? self.singular(word) : self.plural(word);
 
     return (inclusive ? count + ' ' : '') + pluralized;

@@ -31,7 +31,7 @@ describe("amount presenter", function() {
     assert.equal(secondAmount.quantity, 2);
     assert.equal(secondAmount.unit.name, 'tablespoon');
     
-    assert.equal(amountPresenter.amountForDisplay, "¼ cups + 2 tablespoons");
+    assert.equal(amountPresenter.amountForDisplay, "¼ cup + 2 tablespoons");
     
   });
   
@@ -69,7 +69,7 @@ describe("amount presenter", function() {
     assert.equal(secondAmount.quantity, 1);
     assert.equal(secondAmount.unit.name, 'teaspoon');
         
-    assert.equal(amountPresenter.amountForDisplay, "¼ cups + 1 teaspoon");
+    assert.equal(amountPresenter.amountForDisplay, "¼ cup + 1 teaspoon");
     
   });
     
