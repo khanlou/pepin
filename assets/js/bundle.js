@@ -36,34 +36,41 @@ var QuantityPresenter = require('./quantity_presenter');
 var Inflector = require('../inflector');
 var inflector = new Inflector();
 
-var AmountPresenter = function(unreducedAmount) {
-  this.amount = new UnitReducer(unreducedAmount).reducedAmount;
-
-  this.quantity = this.amount.quantity;
-  this.unit = this.amount.unit;
+var AmountPresenter = function(amount) {
+  this.amount = amount;
   
   this.epsilon = 0.0001;
-  
+
   this.amounts = function() {
-    if (this.quantity < this.epsilon) {
-      return [];
-    }
-    
-    if (this.unit.isWhole) {
-      return [this.amount];
-    }
-
-    var multipleOfSmallestAcceptableUnit = this.quantity / this.unit.smallestMeasure;
-    if (Number.isInteger(multipleOfSmallestAcceptableUnit)) {
+    if (this.amount.unit.isWhole) {
       return [this.amount];
     }
     
-    var integerMultipleOfSmallestAcceptableUnit = Math.floor(multipleOfSmallestAcceptableUnit + this.epsilon);
-    var acceptableQuantityInCurrentUnit = integerMultipleOfSmallestAcceptableUnit * this.unit.smallestMeasure;
-    var remainderForUseInSmallerUnit = this.quantity - acceptableQuantityInCurrentUnit;
-    var amountRemaining = new Amount(remainderForUseInSmallerUnit, this.unit);
+    var amounts = [];
+    var amountRemaining = this.amount;
+    
+    while (amountRemaining.quantity > this.epsilon) {
+      amountRemaining = new UnitReducer(amountRemaining).reducedAmount
+      var quantity = amountRemaining.quantity;
+      var unit = amountRemaining.unit;
 
-    return [new Amount(acceptableQuantityInCurrentUnit, this.unit)].concat(new AmountPresenter(amountRemaining).amounts);
+      if (amountRemaining.unit.name === 'dash') {
+        amounts.push(new Amount(1, this.unit));
+        break;
+      }
+      
+      var multipleOfSmallestAcceptableUnit = quantity / unit.smallestMeasure;
+    
+      var integerMultipleOfSmallestAcceptableUnit = Math.floor(multipleOfSmallestAcceptableUnit + this.epsilon);
+      var acceptableQuantityInCurrentUnit = integerMultipleOfSmallestAcceptableUnit * unit.smallestMeasure;
+      var remainderForUseInSmallerUnit = quantity - acceptableQuantityInCurrentUnit;
+      
+      amounts.push(new Amount(acceptableQuantityInCurrentUnit, unit));
+      
+      amountRemaining = new Amount(remainderForUseInSmallerUnit, unit);
+    }
+    
+    return amounts;
   }.bind(this)();
   
   this.amountForDisplay = this.amounts
