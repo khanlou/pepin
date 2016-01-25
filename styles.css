@@ -76,6 +76,16 @@ a {
   font-size: 1.2em;
 }
 
+.frac {
+  font-size: 75%
+}
+
+sup.frac {
+  line-height: 10px;
+  vertical-align: 120%
+}
+
+
 .recipe-description {
   flex: 1;
 }

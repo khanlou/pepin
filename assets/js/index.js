@@ -39,7 +39,7 @@ var scalingAdapter = {
   },
   change: function(element, value) {
     var normalizedValue = this._normalize(value)
-    element.node.textContent = new QuantityPresenter(normalizedValue).quantityForDisplay;
+    element.node.innerHTML = new QuantityPresenter(normalizedValue).quantityForDisplay;
     scaleAllBinders(normalizedValue);
   },
   end: function() { }

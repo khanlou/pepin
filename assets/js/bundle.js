@@ -271,24 +271,24 @@ var QuantityPresenter = function(quantity) {
   
   this.fractions = {
     0: "",
-    0.25: "\u00BC",
-    0.5: "\u00BD",
-    0.75: "\u00BE",
-    0.1428: "\u2150",
-    0.111: "\u2151",
-    0.1: "\u2152",
-    0.333: "\u2153",
-    0.667: "\u2154",
-    0.2: "\u2155",
-    0.4: "\u2156",
-    0.6: "\u2157",
-    0.8: "\u2158",
-    0.167: "\u2159",
-    0.833: "\u215A",
-    0.125: "\u215B",
-    0.375: "\u215C",
-    0.625: "\u215D",
-    0.875: "\u215E",
+    0.25: "1/4",
+    0.5: "1/2",
+    0.75: "3/4",
+    0.1428: "1/7",
+    0.111: "1/9",
+    0.1: "1/10",
+    0.333: "1/3",
+    0.667: "2/3",
+    0.2: "1/5",
+    0.4: "2/5",
+    0.6: "3/5",
+    0.8: "4/5",
+    0.167: "1/6",
+    0.833: "5/6",
+    0.125: "1/8",
+    0.375: "3/8",
+    0.625: "5/8",
+    0.875: "7/8",
   };
   
     
@@ -296,12 +296,20 @@ var QuantityPresenter = function(quantity) {
     return Math.abs(this.remainder - parseFloat(fraction)) < 0.01;
   }.bind(this))
   
+  this.fractionToHTML = function(fractionString) {
+    if (fractionString === "") { return ""; }
+    var fractionParts = fractionString.split('/');
+    return "<sup class='frac'>" + fractionParts[0] + "</sup>&frasl;<sub class='frac'>" + fractionParts[1] + "</sub>";
+  }
+  
+  
   if (this.closestFraction) {
     this.integerAsString = this.integer == 0 ? '' : '' + this.integer
-    this.quantityForDisplay = this.integerAsString + this.fractions[this.closestFraction];
+    this.quantityForDisplay = this.integerAsString + this.fractionToHTML(this.fractions[this.closestFraction]);
   } else {
     this.quantityForDisplay = '' + this.quantity;
   }
+  
 };
 
 module.exports = QuantityPresenter;
@@ -644,7 +652,7 @@ var scalingAdapter = {
   },
   change: function(element, value) {
     var normalizedValue = this._normalize(value)
-    element.node.textContent = new QuantityPresenter(normalizedValue).quantityForDisplay;
+    element.node.innerHTML = new QuantityPresenter(normalizedValue).quantityForDisplay;
     scaleAllBinders(normalizedValue);
   },
   end: function() { }
@@ -1104,11 +1112,11 @@ var IngredientParser = require('./domain/parser');
 
 var IngredientBinder = function(lineItemNode) {
   this.lineItemNode = lineItemNode;
-  this.textNode = lineItemNode.firstChild
+  this.textNode = lineItemNode.firstChild;
   this.parser = new IngredientParser(this.textNode.textContent);
 
   this.scale = function(scalingFactor) {
-    this.textNode.textContent = this.parser.scale(scalingFactor);
+    this.lineItemNode.innerHTML = this.parser.scale(scalingFactor);
   }.bind(this);
 };
 
@@ -1474,15 +1482,17 @@ module.exports = Scrubbing;
 
 
 },{}],17:[function(require,module,exports){
+var QuantityPresenter = require('./domain/quantity_presenter');
+
 var ServingBinder = function(scalingNode) {
   this.scalingNode = scalingNode;
   this.textNode = this.scalingNode.firstChild
   this.value = parseInt(this.textNode.textContent)
 
   this.scale = function(scalingFactor) {
-    this.textNode.textContent = '' + this.value * scalingFactor
+    this.scalingNode.innerHTML = '' + new QuantityPresenter(this.value * scalingFactor).quantityForDisplay;
   }.bind(this);
 };
 
 module.exports = ServingBinder;
-},{}]},{},[12]);
+},{"./domain/quantity_presenter":8}]},{},[12]);

@@ -10,7 +10,7 @@ describe("quantity presenter", function() {
   
   it("should present fractions", function() {
     var quantityPresenter = new QuantityPresenter(0.75);
-    assert.equal(quantityPresenter.quantityForDisplay, "¾");
+    assert.equal(quantityPresenter.quantityForDisplay, "<sup class='frac'>3</sup>&frasl;<sub class='frac'>4</sub>");
   });
   
   it("should present decimals", function() {
