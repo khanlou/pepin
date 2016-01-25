@@ -88,5 +88,12 @@ describe("amount presenter", function() {
     assert.equal(amountPresenter.amountForDisplay, "2");
   });
   
+  it("should work when scaling stuff down", function() {
+    var amount = new Amount(1/5, Unit.unitFromName('teaspoon'));
+    var amountPresenter = new AmountPresenter(amount);
+    var amounts = amountPresenter.amounts;
+    assert.equal(amounts.length, 3);
+    
+  }); 
 
 });

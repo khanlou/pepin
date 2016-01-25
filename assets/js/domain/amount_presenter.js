@@ -23,8 +23,8 @@ var AmountPresenter = function(amount) {
       var quantity = amountRemaining.quantity;
       var unit = amountRemaining.unit;
 
-      if (amountRemaining.unit.name === 'dash') {
-        amounts.push(new Amount(1, this.unit));
+      if (unit.name === 'dash') {
+        amounts.push(new Amount(1, unit));
         break;
       }
       
