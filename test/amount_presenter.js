@@ -88,11 +88,32 @@ describe("amount presenter", function() {
     assert.equal(amountPresenter.amountForDisplay, "2");
   });
   
-  it("should work when scaling stuff down", function() {
+  it("should work when scaling stuff down 1", function() {
     var amount = new Amount(1/5, Unit.unitFromName('teaspoon'));
     var amountPresenter = new AmountPresenter(amount);
     var amounts = amountPresenter.amounts;
+    assert.equal(amounts.length, 1);
+    
+  }); 
+  it("should work when scaling stuff down 2", function() {
+    var amount = new Amount(2/5, Unit.unitFromName('cup'));
+    var amountPresenter = new AmountPresenter(amount);
+    var amounts = amountPresenter.amounts;
     assert.equal(amounts.length, 3);
+    
+  }); 
+  it("should work when scaling stuff down 3", function() {
+    var amount = new Amount(0.25/5, Unit.unitFromName('cup'));
+    var amountPresenter = new AmountPresenter(amount);
+    var amounts = amountPresenter.amounts;
+    assert.equal(amounts.length, 1);
+    
+  }); 
+  it("should work when scaling stuff down 4", function() {
+    var amount = new Amount(0.75/5, Unit.unitFromName('cup'));
+    var amountPresenter = new AmountPresenter(amount);
+    var amounts = amountPresenter.amounts;
+    assert.equal(amounts.length,  2);
     
   }); 
 

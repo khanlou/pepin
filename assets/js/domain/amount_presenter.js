@@ -9,9 +9,15 @@ var AmountPresenter = function(amount) {
   this.amount = amount;
   
   this.epsilon = 0.0001;
+  
+  this.iterationLimit = 10;
 
   this.amounts = function() {
     if (this.amount.unit.isWhole) {
+      return [this.amount];
+    }
+    
+    if ((this.amount.unit.name === 'pinch' || this.amount.unit.name === 'dash') && this.amount.quantity <= 3) {
       return [this.amount];
     }
     
@@ -19,12 +25,15 @@ var AmountPresenter = function(amount) {
     var amountRemaining = this.amount;
     
     while (amountRemaining.quantity > this.epsilon) {
-      amountRemaining = new UnitReducer(amountRemaining).reducedAmount
+      if (this.iterationLimit-- <= 0) {
+        break;
+      }
+      
+      amountRemaining = new UnitReducer(amountRemaining).reducedAmount;
       var quantity = amountRemaining.quantity;
       var unit = amountRemaining.unit;
 
-      if (unit.name === 'dash') {
-        amounts.push(new Amount(1, unit));
+      if (unit.name === 'pinch' || unit.name === 'dash') {
         break;
       }
       
