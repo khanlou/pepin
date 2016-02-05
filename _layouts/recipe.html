@@ -1,0 +1,35 @@
+---
+layout: default
+---
+    <div class="recipe">
+      <h1 class="recipe-name">{{ page.title }}</h1>
+      <div class="recipe-description-metadata">
+        <div class="recipe-description">
+          {{ page.description }}
+          <div class="recipe-source-link"><a href="http://www.onceuponachef.com/2009/08/best-breakfast-pancakes.html">Source</a></div>
+        </div>
+        <div class="recipe-metadata">
+          <div class="scaling-component" >Scale: <span id="scaler">1</span></div>
+          <div class="serving-amount-component">Serves: <span id="serving-amount">{{ page.serves }}</span></div>
+          <div class="prep-time-component">Prep Time: {{ page.prep_time }}</div>
+        </div>
+      </div>
+      <div class="content-wrapper">
+        <div class="ingredients">
+          <h2>Ingredients</h2>
+          <ul id="ingredients">
+            {% for ingredient in page.ingredients %}
+            <li>{{ ingredient }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="instructions" id="instructions">
+          <h2>Instructions</h2>
+          <ol>
+            {% for instruction in page.instructions %}
+            <li>{{ instruction }}</li>
+            {% endfor %}
+          </ol>
+        </div>
+      </div>
+    </div>

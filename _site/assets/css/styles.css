@@ -1,0 +1,154 @@
+body {
+  letter-spacing: 0;
+  color: #333;
+  line-height: 1.3;
+}
+
+.recipe {
+  font-family: "freight-text-pro", sans-serif;
+  margin: 10px;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 0.2em;
+}
+
+h2 {
+  font-size: 1.4em;
+  margin-bottom: 0.4em;
+}
+
+.recipe-description {
+  font-style: italic;
+  margin-bottom: 0.4em;
+}
+
+a {
+  text-decoration: none;
+  color: #666;
+  font-style: italic;
+}
+
+.recipe-source-link {
+  font-size: 0.9em;
+  margin-top: 0.6em;
+  margin-bottom: 1.2em;
+}
+
+.recipe-metadata {
+  border-top: thin solid #ccc;
+  border-bottom: thin solid #ccc;
+  overflow: auto;
+  margin-bottom: 1.5em;
+}
+
+.recipe-metadata div {
+  float: left;
+  padding: .4em;
+  margin: .4em 0;
+  border-right: thin solid #ccc;
+}
+
+.recipe-metadata div:last-child {
+  border: none;
+}
+
+[data-scrub-orientation] {
+  border-bottom:1px dashed black; 
+}
+
+[data-scrub-orientation="Vertical"] {
+  cursor: row-resize;
+}
+
+[data-scrub-orientation="Horizontal"] {
+  cursor: col-resize;
+}
+
+.ingredients li {
+  margin-bottom: 0.4em;
+  font-size: 1.2em;
+}
+
+.instructions li {
+  margin-bottom: 0.4em;
+  font-size: 1.2em;
+}
+
+.frac {
+  font-size: 75%
+}
+
+sup.frac {
+  line-height: 10px;
+  vertical-align: 120%
+}
+
+
+.recipe-description {
+  flex: 1;
+}
+
+.recipe-description-metadata { 
+  display: block;
+}
+
+.recipe-metadata {
+  margin-to: 10px;
+  margin-left: 0; 
+}
+
+@media (min-width: 800px) {
+  .recipe-metadata {
+    margin-left: 100px;
+    white-space: nowrap;
+  }
+
+  .content-wrapper {
+    display: flex;
+    align-items: stretch;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+    
+  .ingredients {
+    min-width: 200px;
+    width: 200px;
+    margin-right: 50px;
+  }
+  
+  .instructions {
+    
+  }
+
+  .recipe-description-metadata {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  
+  .recipe-metadata div {
+    padding: .4em 1em;
+  }
+}
+
+@media (min-width: 1200px) {
+  body {
+    font-size: 150%;
+  }
+  .ingredients {
+    min-width: 400px;
+    width: 400px;
+  }
+  
+  .instructions {
+  }
+}
+
+@media (min-width: 1600px) {
+  .recipe {
+    width: 1600px;
+    margin: auto;
+  }
+}
