@@ -15,5 +15,6 @@ collections:
 
 exclude:
   - node_modules
+  - test
 
 markdown: kramdown
