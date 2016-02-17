@@ -6,7 +6,7 @@ body {
 
 .recipe {
   font-family: "freight-text-pro", sans-serif;
-  margin: 10px;
+  padding: 10px;
 }
 
 h1 {
@@ -137,18 +137,21 @@ sup.frac {
   body {
     font-size: 150%;
   }
+  
+  .recipe {
+    padding: 10px 40px;
+  }
+  
   .ingredients {
     min-width: 400px;
     width: 400px;
   }
   
-  .instructions {
-  }
 }
 
 @media (min-width: 1600px) {
   .recipe {
-    width: 1600px;
+    width: 1520px;
     margin: auto;
   }
 }
