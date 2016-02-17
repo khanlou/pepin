@@ -115,17 +115,13 @@ sup.frac {
   .ingredients {
     min-width: 200px;
     width: 200px;
-/*    margin-right: 50px;*/
   }
   
   .separator {
-    background-color: black;
-/*    width: 1px;*/
-/*    height: 100px;*/
-    margin: 50px;
+    margin: 25px;
     min-height: 100%;
     flex-basis: 2px;
-    
+    border-left: thin solid #ccc;
   }
   
   .instructions {
