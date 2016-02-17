@@ -137,6 +137,11 @@ sup.frac {
   body {
     font-size: 150%;
   }
+  
+  body {
+    margin: 1em 2em;
+  }
+  
   .ingredients {
     min-width: 400px;
     width: 400px;

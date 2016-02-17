@@ -18,4 +18,5 @@ instructions:
   - Heat a griddle or nonstick pan over medium heat and coat it with vegetable oil. Drop the batter from a large spoon (about 1/4 cup) and cook until the first side is golden brown, or until the top surface bubbles and is dotted with holes. Flip and cook until the other side is golden brown. This happens quickly so peek after 30 seconds and watch carefully! Adjust the heat setting if necessary. Wipe the griddle totally clean with a paper towel between batches. Serve immediately.
 serves: 4
 prep_time: 20 minutes
+cook_time: 5 minutes
 ---

@@ -10,17 +10,18 @@
   </head>
   
   <body>
-        <div class="recipe">
-      <h1 class="recipe-name">Fluffy Pancakes</h1>
+        <div class="recipe" itemscope itemtype="https://schema.org/Recipe">
+      <h1 class="recipe-name" itemprop="name">Fluffy Pancakes</h1>
       <div class="recipe-description-metadata">
-        <div class="recipe-description">
+        <div class="recipe-description" itemprop="description">
           These pancakes are fluffy and easily stackable. I like to eat them while they're cooking, instead of serving them all at once.
           <div class="recipe-source-link"><a href="http://www.onceuponachef.com/2009/08/best-breakfast-pancakes.html">Source</a></div>
         </div>
         <div class="recipe-metadata">
           <div class="scaling-component" >Scale: <span id="scaler">1</span></div>
-          <div class="serving-amount-component">Serves: <span id="serving-amount">4</span></div>
-          <div class="prep-time-component">Prep Time: 20 minutes</div>
+          <div class="serving-amount-component">Serves: <span id="serving-amount" itemprop="recipeYield">4</span></div>
+          <div class="prep-time-component">Prep Time: <span itemprop="prepTime">20 minutes</span></div>
+          <div class="cook-time-component">Cook Time: <span  itemprop="cookTime">5 minutes</span></div>
         </div>
       </div>
       <div class="content-wrapper">
@@ -28,23 +29,23 @@
           <h2>Ingredients</h2>
           <ul id="ingredients">
             
-            <li>1 cup all-purpose flour</li>
+            <li itemprop="ingredients">1 cup all-purpose flour</li>
             
-            <li>2 teaspoons baking powder</li>
+            <li itemprop="ingredients">2 teaspoons baking powder</li>
             
-            <li>2 tablespoons sugar</li>
+            <li itemprop="ingredients">2 tablespoons sugar</li>
             
-            <li>1/2 teaspoon salt</li>
+            <li itemprop="ingredients">1/2 teaspoon salt</li>
             
-            <li>1 large egg</li>
+            <li itemprop="ingredients">1 large egg</li>
             
-            <li>1 cup milk</li>
+            <li itemprop="ingredients">1 cup milk</li>
             
-            <li>2 tablespoons unsalted butter, melted and slightly cooled</li>
+            <li itemprop="ingredients">2 tablespoons unsalted butter, melted and slightly cooled</li>
             
           </ul>
         </div>
-        <div class="instructions" id="instructions">
+        <div class="instructions" id="instructions" itemprop="recipeInstructions">
           <h2>Instructions</h2>
           <ol>
             

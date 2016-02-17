@@ -18,6 +18,6 @@ instructions:
   - Place dough in skillet and cook until bubbles form on top side and bottom side has light browned spots, 15-30 seconds. Flip tortilla and cook until second side develops light browned spots, 15-30 seconds longer. Transfer tortilla to a plate and cover with dish cloth.
   - Repeat with remaining balls of dough.
   - Serve immediately while still warm.
-serves: 4
+yields: 10 tortillas
 prep_time: 20 minutes
 ---

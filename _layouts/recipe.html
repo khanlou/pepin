@@ -1,17 +1,22 @@
 ---
 layout: default
 ---
-    <div class="recipe">
-      <h1 class="recipe-name">{{ page.title }}</h1>
+    <div class="recipe" itemscope itemtype="https://schema.org/Recipe">
+      <h1 class="recipe-name" itemprop="name">{{ page.title }}</h1>
       <div class="recipe-description-metadata">
-        <div class="recipe-description">
+        <div class="recipe-description" itemprop="description">
           {{ page.description }}
           <div class="recipe-source-link"><a href="http://www.onceuponachef.com/2009/08/best-breakfast-pancakes.html">Source</a></div>
         </div>
         <div class="recipe-metadata">
           <div class="scaling-component" >Scale: <span id="scaler">1</span></div>
-          <div class="serving-amount-component">Serves: <span id="serving-amount">{{ page.serves }}</span></div>
-          <div class="prep-time-component">Prep Time: {{ page.prep_time }}</div>
+          {% if page.yields
+            %}<div class="serving-amount-component">Yields: <span id="serving-amount" itemprop="recipeYield">{{ page.yields }}</span></div>{%
+               elsif page.serves
+          %}<div class="serving-amount-component">Serves: <span id="serving-amount" itemprop="recipeYield">{{ page.serves }}</span></div>{% 
+            endif %}
+          {% if page.prep_time %}<div class="prep-time-component">Prep Time: <span itemprop="prepTime">{{ page.prep_time }}</span></div>{% endif %}
+          {% if page.cook_time %}<div class="cook-time-component">Cook Time: <span  itemprop="cookTime">{{ page.cook_time }}</span></div>{% endif %}
         </div>
       </div>
       <div class="content-wrapper">
@@ -19,11 +24,11 @@ layout: default
           <h2>Ingredients</h2>
           <ul id="ingredients">
             {% for ingredient in page.ingredients %}
-            <li>{{ ingredient }}</li>
+            <li itemprop="ingredients">{{ ingredient }}</li>
             {% endfor %}
           </ul>
         </div>
-        <div class="instructions" id="instructions">
+        <div class="instructions" id="instructions" itemprop="recipeInstructions">
           <h2>Instructions</h2>
           <ol>
             {% for instruction in page.instructions %}
