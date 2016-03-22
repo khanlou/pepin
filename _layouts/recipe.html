@@ -9,14 +9,14 @@ layout: default
           <div class="recipe-source-link"><a href="http://www.onceuponachef.com/2009/08/best-breakfast-pancakes.html">Source</a></div>
         </div>
         <div class="recipe-metadata">
-          <div class="scaling-component" >Scale: <span id="scaler">1</span></div>
+          <div class="scaling-component" ><span class="metadata-title">Scale:</span> <span id="scaler">1</span></div>
           {% if page.yields
-            %}<div class="serving-amount-component">Yields: <span id="serving-amount" itemprop="recipeYield">{{ page.yields }}</span></div>{%
+            %}<div class="serving-amount-component"><span class="metadata-title">Yields:</span> <span id="serving-amount" itemprop="recipeYield">{{ page.yields }}</span></div>{%
                elsif page.serves
-          %}<div class="serving-amount-component">Serves: <span id="serving-amount" itemprop="recipeYield">{{ page.serves }}</span></div>{% 
+          %}<div class="serving-amount-component"><span class="metadata-title">Serves:</span> <span id="serving-amount" itemprop="recipeYield">{{ page.serves }}</span></div>{% 
             endif %}
-          {% if page.prep_time %}<div class="prep-time-component">Prep Time: <span itemprop="prepTime">{{ page.prep_time }}</span></div>{% endif %}
-          {% if page.cook_time %}<div class="cook-time-component">Cook Time: <span  itemprop="cookTime">{{ page.cook_time }}</span></div>{% endif %}
+          {% if page.prep_time %}<div class="prep-time-component"><span class="metadata-title">Prep Time:</span> <span itemprop="prepTime">{{ page.prep_time }}</span></div>{% endif %}
+          {% if page.cook_time %}<div class="cook-time-component"><span class="metadata-title">Cook Time:</span> <span  itemprop="cookTime">{{ page.cook_time }}</span></div>{% endif %}
         </div>
       </div>
       <div class="content-wrapper">
