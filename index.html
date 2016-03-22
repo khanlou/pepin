@@ -2,16 +2,17 @@
 layout: default
 ---
 
-<div class="home">
+<div class="recipe-list">
 
-  <h1 class="page-heading">Recipes</h1>
+  <h1>{{ site.title}}</h1>
 
-  <ul class="post-list">
+  <ul>
     {% for recipe in site.recipes %}
       <li>
-        <h2>
-          <a class="post-link" href="{{ recipe.url | prepend: site.baseurl }}">{{ recipe.title }}</a>
-        </h2>
+        <a class="recipe-link" href="{{ recipe.url | prepend: site.baseurl }}">
+          <h2>{{ recipe.title }}</h2>
+          <p class="recipe-description">{{ recipe.description }}</p>
+        </a>
       </li>
     {% endfor %}
   </ul>

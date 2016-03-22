@@ -4,6 +4,30 @@ body {
   line-height: 1.3;
 }
 
+/* index */
+
+.recipe-list {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.recipe-list h1 {
+  text-align: center;
+  padding-bottom: 0.4em;
+  border-bottom: thin solid #ccc;
+  margin-bottom: 0.7em;
+}
+
+.recipe-list ul {
+  list-style-type: none;
+}
+
+.recipe-list h2 {
+  text-align: center;
+}
+
+/* recipe page */
+
 .recipe {
   font-family: "franklin-gothic-urw", sans-serif;
   padding: 10px;
