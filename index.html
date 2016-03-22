@@ -10,8 +10,10 @@ layout: default
     {% for recipe in site.recipes %}
       <li>
         <a class="recipe-link" href="{{ recipe.url | prepend: site.baseurl }}">
-          <h2>{{ recipe.title }}</h2>
-          <p class="recipe-description">{{ recipe.description }}</p>
+          <div class="recipe-list-item">
+            <h2>{{ recipe.title }}</h2>
+            <p class="recipe-description">{{ recipe.description }}</p>
+          </div>
         </a>
       </li>
     {% endfor %}

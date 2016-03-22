@@ -7,7 +7,7 @@ body {
 /* index */
 
 .recipe-list {
-  width: 400px;
+  width: 500px;
   margin: 0 auto;
 }
 
@@ -15,15 +15,28 @@ body {
   text-align: center;
   padding-bottom: 0.4em;
   border-bottom: thin solid #ccc;
-  margin-bottom: 0.7em;
+  margin-bottom: 0.3em;
 }
 
 .recipe-list ul {
   list-style-type: none;
 }
 
+.recipe-list-item {
+  padding: 10px;
+}
+
+a.recipe-link :hover {
+  display: block;
+  background-color: #eee;
+}
+
 .recipe-list h2 {
   text-align: center;
+}
+
+.recipe-list .recipe-description {
+  font-size: 0.8em;
 }
 
 /* recipe page */
