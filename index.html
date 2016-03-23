@@ -1,4 +1,5 @@
 ---
+title: Home
 layout: page
 ---
 
@@ -9,7 +10,7 @@ layout: page
   <ul>
     {% for recipe in site.recipes %}
       <li>
-        <a class="recipe-link" href="{{ recipe.url | prepend: site.baseurl }}">
+        <a class="recipe-link" href="{{ recipe.url }}">
           <div class="recipe-list-item">
             <h2>{{ recipe.title }}</h2>
             <p class="recipe-description">{{ recipe.description }}</p>

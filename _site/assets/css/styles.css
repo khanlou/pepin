@@ -4,12 +4,26 @@ body {
   line-height: 1.3;
 }
 
+/* navigation */
+
+ul.navigation {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row-reverse;
+}
+
+.navigation li {
+  list-style-type: none;
+  padding: 5px 10px;
+  font-family: "abril-titling";
+}
+
 /* page */
 
 .page {
   width: 500px;
   margin: 0 auto;
-  font-size: 0.8em;
+  font-size: 130%;
 }
 
 
@@ -189,7 +203,7 @@ sup.frac {
 }
 
 @media (min-width: 1200px) {
-  body {
+  body .recipe {
     font-size: 150%;
   }
   

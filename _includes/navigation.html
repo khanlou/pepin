@@ -1,0 +1,5 @@
+<ul class="navigation">
+  {% for page in site.pages %}
+    <li><a href="{{ page.permalink | prepend: site.baseurl }}">{{ page.title  }}</a></li>
+  {% endfor %}
+</ul>
