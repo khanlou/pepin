@@ -4,19 +4,22 @@ body {
   line-height: 1.3;
 }
 
-/* index */
+/* page */
 
-.recipe-list {
+.page {
   width: 500px;
   margin: 0 auto;
+  font-size: 0.8em;
 }
 
-.recipe-list h1 {
+
+.page h1 {
   text-align: center;
   padding-bottom: 0.4em;
   border-bottom: thin solid #ccc;
   margin-bottom: 0.3em;
 }
+/* recipe */
 
 .recipe-list ul {
   list-style-type: none;
