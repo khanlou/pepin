@@ -1,4 +1,5 @@
 body {
+  font-family: "franklin-gothic-urw", sans-serif;
   letter-spacing: 0;
   color: #333;
   line-height: 1.3;
@@ -63,7 +64,6 @@ a.recipe-link :hover {
 /* recipe page */
 
 .recipe {
-  font-family: "franklin-gothic-urw", sans-serif;
   padding: 10px;
 }
 
