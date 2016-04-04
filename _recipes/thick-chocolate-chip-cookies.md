@@ -11,7 +11,7 @@ ingredients:
   - 1 cup unsalted butter, cold and cut into cubes
   - 7/8 cup packed light or dark brown sugar
   - 1/2 cup granulated sugar
-  - 2 eggs, cold, lightly beaten in a separate bowl
+  - 2 eggs, cold, lightly beaten
   - 1 teaspoon vanilla extract
   - 2 cups dark chunky chocolate chips
 instructions:
