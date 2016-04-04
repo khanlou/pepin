@@ -146,7 +146,6 @@ var IngredientParser = function(text) {
     this.ingredientLine = this.matchingPattern.parse(this.text);
     this.scale = function(scalingFactor) {
       var scaledIngredientLine = this.ingredientLine.ingredientLineByScaling(scalingFactor);
-      console.log(scaledIngredientLine)
       return new IngredientLinePresenter(this.matchingPattern, scaledIngredientLine).stringForDisplay;
     }.bind(this);
   } else {

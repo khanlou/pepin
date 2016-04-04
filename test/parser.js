@@ -49,5 +49,11 @@ describe("parser", function() {
     assert.equal(amountString, '1 tablespoon kosher salt')
   });
   
+  it("should parse things that have no quantity", function() {
+    var parser = new IngredientParser("vegetable oil");
+    var amountString = parser.scale(3)
+    assert.equal(amountString, 'vegetable oil')
+  });
+  
   
 });
