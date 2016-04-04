@@ -140,19 +140,14 @@ var IngredientParser = function(text) {
 
   this.matchingPattern = Pattern.allPatterns.find(function(pattern) {
     return pattern.matches(text);
-  })
+  });
 
-  if (this.matchingPattern) {
-    this.ingredientLine = this.matchingPattern.parse(this.text);
-    this.scale = function(scalingFactor) {
-      var scaledIngredientLine = this.ingredientLine.ingredientLineByScaling(scalingFactor);
-      return new IngredientLinePresenter(this.matchingPattern, scaledIngredientLine).stringForDisplay;
-    }.bind(this);
-  } else {
-    this.scale = function() {
-      return this.text;
-    }.bind(this)
-  }
+  this.ingredientLine = this.matchingPattern.parse(this.text);
+
+  this.scale = function(scalingFactor) {
+    return new IngredientLinePresenter(this.matchingPattern, this.ingredientLine.ingredientLineByScaling(scalingFactor)).stringForDisplay;
+  }.bind(this);
+
 };
 
 module.exports = IngredientParser;
