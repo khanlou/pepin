@@ -29,6 +29,10 @@ ul.navigation {
   font-family: "abril-titling";
 }
 
+a {
+  color: #666;
+}
+
 /* page */
 
 .page {
@@ -79,7 +83,7 @@ h2 {
   margin-bottom: 0.4em;
 }
 
-a {
+.recipe-source-link a {
   text-decoration: none;
   color: #666;
   font-style: italic;
