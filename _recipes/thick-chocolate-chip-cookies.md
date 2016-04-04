@@ -6,11 +6,11 @@ source: http://bromabakery.com/2015/01/copycat-levain-bakery-chocolate-chip-cook
 ingredients: 
   - 3 1/8 cups all purpose flour
   - 1 teaspoon baking powder
-  - ¼ teaspoon baking soda
-  - 1 ½ teaspoons kosher salt
+  - 0.25 teaspoon baking soda
+  - 1.5 teaspoons kosher salt
   - 1 cup unsalted butter, cold and cut into cubes
-  - 7/8 cup (6 ounces) light or dark brown sugar
-  - ½ cup granulated sugar
+  - 7/8 cup packed light or dark brown sugar
+  - 1/2 cup granulated sugar
   - 2 eggs, cold, lightly beaten in a separate bowl
   - 1 teaspoon vanilla extract
   - 2 cups dark chunky chocolate chips
