@@ -41,6 +41,16 @@ a {
   font-size: 130%;
 }
 
+.page ul {
+  margin: 0;
+}
+
+@media (max-width: 500px) {
+  .page {
+    width: 100%;
+  }
+}
+
 
 /* recipe */
 
@@ -63,6 +73,10 @@ a.recipe-link :hover {
 
 .recipe-list .recipe-description {
   font-size: 0.8em;
+}
+
+.recipe-list a {
+  text-decoration: none;
 }
 
 /* recipe page */
