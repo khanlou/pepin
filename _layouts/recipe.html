@@ -6,7 +6,7 @@ layout: default
       <div class="recipe-description-metadata">
         <div class="recipe-description" itemprop="description">
           {{ page.description }}
-          <div class="recipe-source-link"><a href="http://www.onceuponachef.com/2009/08/best-breakfast-pancakes.html">Source</a></div>
+          {% if page.source %}<div class="recipe-source-link"><a href="{{ page.source }}">Source</a></div>{% endif %}
         </div>
         <div class="recipe-metadata">
           <div class="scaling-component" ><span class="metadata-title">Scale:</span> <span id="scaler">1</span></div>
